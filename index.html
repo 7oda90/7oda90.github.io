@@ -341,12 +341,15 @@
   .swatch-green { background: linear-gradient(135deg,#00d084,#c6ff5e); }
   .theme-option b { font-size: 13px; }
   .theme-option small { color: #a4a4b5; font-size: 11px; }
+  #homepage-launch { position:relative; z-index:1; width:min(100% - 30px,650px); margin:18px auto 28px; text-align:center; }
   #launch-site {
-    display: block; width: 100%; margin-top: 15px; padding: 13px 16px;
-    color: #fff; background: var(--theme-accent, #ff304f); border: 0; border-radius: 11px;
-    font: 800 15px/1.4 inherit; cursor: pointer; transition: filter .2s ease, transform .2s ease;
+    display:block; width:100%; margin:0; padding:15px 18px;
+    color:#fff; background:linear-gradient(110deg,var(--theme-accent,#ff304f),color-mix(in srgb,var(--theme-accent,#ff304f) 65%,#111));
+    border:1px solid color-mix(in srgb,var(--theme-accent,#ff304f) 70%,white); border-radius:13px;
+    font:800 16px/1.4 "Segoe UI",sans-serif; cursor:pointer; box-shadow:0 8px 25px color-mix(in srgb,var(--theme-accent,#ff304f) 22%,transparent);
   }
-  #launch-site:hover { filter: brightness(1.12); transform: translateY(-1px); }
+  #launch-site:hover { filter:brightness(1.12); }
+  #homepage-launch p { margin:8px 0 0; color:#a4a4b5; font-size:12px; }
   body[data-theme="blue"] { --theme-accent:#168bff; }
   body[data-theme="purple"] { --theme-accent:#b65cff; }
   body[data-theme="green"] { --theme-accent:#00d084; }
@@ -480,7 +483,7 @@
   <div class="clock-item"><span class="clock-symbol" aria-hidden="true">▦</span><div><small>تاريخ اليوم</small><strong id="local-date">--/--/----</strong></div></div>
 </section>
 
-
+<div id="homepage-launch"><button id="launch-site" type="button">دخول إلى الموقع <span aria-hidden="true">←</span></button><p>اضغط للدخول، أو استخدم ⚙ لتغيير الثيم</p></div>
 
 <section id="theme-picker" role="dialog" aria-modal="true" aria-labelledby="theme-picker-title" aria-label="اختيار الثيم">
   <button id="theme-menu-close" type="button" aria-label="إغلاق قائمة الثيمات">×</button>
@@ -498,7 +501,6 @@
     <button class="theme-option" type="button" data-pick-theme="thor" aria-pressed="false"><span class="theme-swatch swatch-thor"></span><b>Thor</b><small>أزرق البرق وذهبي</small></button>
     <button class="theme-option" type="button" data-pick-theme="panther" aria-pressed="false"><span class="theme-swatch swatch-panther"></span><b>Black Panther</b><small>أسود وبنفسجي</small></button>
   </div>
-  <button id="launch-site" type="button">دخول إلى الموقع ←</button>
 </section>
 
 <div id="wrap">
@@ -612,8 +614,7 @@
     var target = "jb.html" + location.search;
 
     function go() {
-      setState("اختار الثيم اللي يعجبك وبعدها ادخل للموقع", "warn");
-      openThemeMenu();
+      setState("جاهز للدخول إلى الموقع — اضغط زر الدخول", "ok");
     }
 
 
