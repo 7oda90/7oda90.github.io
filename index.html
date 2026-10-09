@@ -837,5 +837,55 @@
   });
 })();
 </script>
+
+<style>
+/* FitGirl-inspired music player: embedded YouTube player */
+#mm-music {
+  position:fixed; right:14px; bottom:14px; z-index:29;
+  width:min(270px,calc(100vw - 84px)); padding:10px;
+  color:#fff; direction:rtl; text-align:right;
+  border:1px solid rgba(255,255,255,.25); border-radius:17px;
+  background:linear-gradient(145deg,rgba(24,25,38,.86),rgba(7,8,16,.92));
+  -webkit-backdrop-filter:blur(20px) saturate(160%); backdrop-filter:blur(20px) saturate(160%);
+  box-shadow:inset 0 1px rgba(255,255,255,.24),0 12px 34px rgba(0,0,0,.4);
+}
+#mm-music .mm-music-head { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; }
+#mm-music .mm-music-title { font-size:12px; font-weight:800; line-height:1.4; }
+#mm-music .mm-music-subtitle { display:block; color:#b9c2d3; font-size:10px; font-weight:500; }
+#mm-music .mm-music-toggle { flex:0 0 auto; border:1px solid rgba(255,255,255,.22); border-radius:9px; padding:4px 8px; background:rgba(255,255,255,.09); color:white; font:inherit; cursor:pointer; }
+#mm-music iframe { display:block; width:100%; aspect-ratio:16/9; border:0; border-radius:10px; background:#090a12; }
+#mm-music .mm-music-note { margin:7px 2px 0; color:#c4c9d6; font-size:10px; line-height:1.5; }
+#mm-music.mm-collapsed { width:auto; padding:8px; }
+#mm-music.mm-collapsed .mm-music-head { margin:0; }
+#mm-music.mm-collapsed .mm-music-subtitle, #mm-music.mm-collapsed iframe, #mm-music.mm-collapsed .mm-music-note { display:none; }
+@media(max-width:430px) { #mm-music { right:10px; bottom:10px; width:min(225px,calc(100vw - 74px)); padding:8px; } #mm-music .mm-music-title { font-size:11px; } }
+</style>
+
+<div id="mm-music" aria-label="مشغل موسيقى الموقع">
+  <div class="mm-music-head">
+    <div class="mm-music-title">🎵 RiveR — Solo<span class="mm-music-subtitle">FitGirl-inspired soundtrack</span></div>
+    <button class="mm-music-toggle" id="mm-music-toggle" type="button" aria-expanded="true" aria-label="تصغير مشغل الموسيقى">−</button>
+  </div>
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/72QAAOaYW2M?autoplay=1&loop=1&playlist=72QAAOaYW2M&playsinline=1&rel=0"
+    title="RiveR - Solo"
+    allow="autoplay; encrypted-media; picture-in-picture"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen></iframe>
+  <p class="mm-music-note">لو التشغيل التلقائي اتمنع، اضغط تشغيل داخل المشغل. المتصفح ممكن يحتاج تفاعل منك.</p>
+</div>
+<script>
+(function () {
+  var panel = document.getElementById("mm-music");
+  var button = document.getElementById("mm-music-toggle");
+  if (!panel || !button) return;
+  button.addEventListener("click", function () {
+    var collapsed = panel.classList.toggle("mm-collapsed");
+    button.textContent = collapsed ? "♫" : "−";
+    button.setAttribute("aria-expanded", collapsed ? "false" : "true");
+    button.setAttribute("aria-label", collapsed ? "فتح مشغل الموسيقى" : "تصغير مشغل الموسيقى");
+  });
+})();
+</script>
 </body>
 </html>
