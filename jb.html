@@ -304,7 +304,15 @@
         #spin { animation: spin 2s linear infinite; }
       }
 
-    </style>
+    
+      /* Static neon styling: disable moving glow and pulsing effects */
+      #brand b, #brand::after, #system-clock, #spin, #music-player,
+      .clock-item strong, .success-check {
+        animation: none !important;
+      }
+      #brand::after { opacity: 1 !important; }
+
+</style>
   
     <script>
       (function () {
