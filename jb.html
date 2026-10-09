@@ -376,6 +376,14 @@
         #brand b, #brand::after, #system-clock, .clock-item strong { animation:none !important; }
       }
 
+
+      #brand { position:relative; overflow:hidden; }
+      #brand::after {
+        content:""; position:absolute; bottom:0; left:12%; width:76%; height:2px;
+        background:linear-gradient(90deg, transparent, #ff304f, #6cf6ff, #ff304f, transparent);
+        background-size:220% 100%;
+        animation:neonFlow 3.2s ease-in-out infinite;
+      }
 </style>
   </head>
   <body>
