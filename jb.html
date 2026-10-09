@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" manifest="cache.appcache">
+<html lang="ar" dir="rtl" manifest="cache.appcache">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -241,9 +241,26 @@
         text-shadow: 0 0 18px rgba(255,48,79,.2);
       }
       body.done #msg {
-        color: var(--neon-cyan);
-        text-shadow: 0 0 18px rgba(108,246,255,.32);
+        color: #fff;
+        text-shadow: 0 0 18px rgba(46, 204, 113, .28);
+        letter-spacing: 0;
       }
+      .success-check {
+        display: none; width: 58px; height: 58px; margin: 0 auto 14px;
+        align-items: center; justify-content: center; border-radius: 50%;
+        border: 3px solid #2ecc71; background: rgba(46, 204, 113, .13);
+        color: #2ecc71; font: 900 34px/1 "Segoe UI", system-ui, sans-serif;
+        box-shadow: 0 0 22px rgba(46, 204, 113, .32), inset 0 0 14px rgba(46, 204, 113, .08);
+        animation: success-pop .35s ease-out both;
+      }
+      body.done .success-check { display: flex; }
+      @keyframes success-pop {
+        from { transform: scale(.55); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+      body[dir="rtl"] #brand b { letter-spacing: .03em; }
+      body.log #out { direction: ltr; text-align: left; }
+      body.log #state { direction: rtl; text-align: right; }
       body.fail #msg { color: #ff526b; }
       body.log #wrap {
         width: min(100% - 28px, 1000px);
@@ -294,7 +311,7 @@
       <span class="brand-mark" aria-hidden="true">M</span><b>MAHMOUD MOHAMED</b>
     </div>
     <div id="spin"></div>
-    <div id="msg">Restart your console</div>
+    <div id="msg"><span class="success-check" aria-hidden="true">✓</span><span id="msg-text">أعد تشغيل جهازك</span></div>
     <div id="wrap">
       <div id="state"></div>
       <div id="out"></div>
