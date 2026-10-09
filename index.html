@@ -465,6 +465,15 @@
   @keyframes musicGlow { 50% { box-shadow:0 0 25px color-mix(in srgb,var(--theme-accent,#ff304f) 48%,transparent); transform:scale(1.04); } }
   @media(max-width:430px) { #music-player { gap:10px; padding:12px; } #music-toggle { width:42px;height:42px; } #music-volume { width:62px; } #music-meta strong { font-size:12px; } }
   @media(prefers-reduced-motion:reduce) { #music-player.is-playing #music-toggle { animation:none; } }
+
+  /* Static neon styling: disable moving glow and pulsing effects */
+  #brand b, #brand::after, #system-clock, #theme-picker, #wrap,
+  .feature-card, .clock-item strong, #music-player.is-playing #music-toggle {
+    animation: none !important;
+  }
+  #brand::after { opacity: 1 !important; }
+  .feature-card, #theme-option, #music-toggle { transition: none !important; }
+
 </style>
 </head>
 <body>
