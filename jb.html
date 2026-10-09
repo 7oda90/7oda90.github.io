@@ -353,6 +353,29 @@
       html[data-theme="purple"] #system-clock { border-color:rgba(168,85,247,.35); }
       html[data-theme="green"] #system-clock { border-color:rgba(0,208,132,.35); }
       @media(max-width:420px) { #system-clock { gap:12px; padding:11px 8px; } .clock-item { gap:6px; } .clock-item strong { font-size:13px; } }
+
+      /* Animated neon glow */
+      @keyframes neonPulse {
+        0%, 100% { filter:drop-shadow(0 0 2px var(--neon-red, #ff304f)); text-shadow:0 0 7px var(--neon-red, #ff304f), 0 0 16px rgba(255,48,79,.35); }
+        50% { filter:drop-shadow(0 0 8px var(--neon-red, #ff304f)); text-shadow:0 0 12px var(--neon-red, #ff304f), 0 0 28px rgba(255,48,79,.55); }
+      }
+      @keyframes neonFlow {
+        0% { background-position:0% 50%; opacity:.65; }
+        50% { background-position:100% 50%; opacity:1; }
+        100% { background-position:0% 50%; opacity:.65; }
+      }
+      @keyframes neonBorder {
+        0%, 100% { box-shadow:0 0 7px rgba(255,48,79,.10), inset 0 0 4px rgba(255,48,79,.03); }
+        50% { box-shadow:0 0 22px rgba(255,48,79,.22), inset 0 0 10px rgba(255,48,79,.07); }
+      }
+      #brand b { animation:neonPulse 2.8s ease-in-out infinite; }
+      #brand::after { background-size:220% 100%; animation:neonFlow 3.2s ease-in-out infinite; }
+      #system-clock { animation:neonBorder 3.6s ease-in-out infinite; }
+      .clock-item strong { animation:neonPulse 3s ease-in-out infinite; }
+      @media (prefers-reduced-motion: reduce) {
+        #brand b, #brand::after, #system-clock, .clock-item strong { animation:none !important; }
+      }
+
 </style>
   </head>
   <body>
