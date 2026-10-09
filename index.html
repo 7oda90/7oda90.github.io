@@ -310,10 +310,72 @@
     color: #fff; font-weight: 900; font-size: 21px;
     box-shadow: 0 0 22px rgba(255,48,79,.25), 0 0 42px rgba(108,246,255,.1);
   }
-</style>
+
+  #theme-picker {
+    position: relative; z-index: 2;
+    width: min(100% - 30px, 650px); margin: 18px auto 30px;
+    padding: 22px; text-align: right;
+    background: rgba(15,15,25,.96); border: 1px solid var(--theme-accent, #ff304f);
+    border-radius: 18px; box-shadow: 0 16px 45px rgba(0,0,0,.28);
+  }
+  #theme-picker h2 { margin: 0 0 4px; font-size: 21px; }
+  .theme-note { margin: 0 0 16px; color: #a4a4b5; font-size: 13px; }
+  .theme-options { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .theme-option {
+    display: grid; grid-template-columns: 34px 1fr; align-items: center; column-gap: 10px;
+    text-align: right; padding: 12px; color: #f7f7fb; cursor: pointer;
+    background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.12);
+    border-radius: 12px; font: inherit; transition: .2s ease;
+  }
+  .theme-option[aria-pressed="true"] { border-color: var(--theme-accent, #ff304f); background: rgba(255,255,255,.075); box-shadow: 0 0 18px color-mix(in srgb, var(--theme-accent, #ff304f) 18%, transparent); }
+  .theme-option:hover { transform: translateY(-2px); }
+  .theme-swatch { grid-row: span 2; width: 30px; height: 30px; border-radius: 50%; border: 2px solid rgba(255,255,255,.35); }
+  .swatch-red { background: linear-gradient(135deg,#ff304f,#6cf6ff); }
+  .swatch-blue { background: linear-gradient(135deg,#168bff,#73f4ff); }
+  .swatch-purple { background: linear-gradient(135deg,#a855f7,#ff75d8); }
+  .swatch-green { background: linear-gradient(135deg,#00d084,#c6ff5e); }
+  .theme-option b { font-size: 13px; }
+  .theme-option small { color: #a4a4b5; font-size: 11px; }
+  #launch-site {
+    display: block; width: 100%; margin-top: 15px; padding: 13px 16px;
+    color: #fff; background: var(--theme-accent, #ff304f); border: 0; border-radius: 11px;
+    font: 800 15px/1.4 inherit; cursor: pointer; transition: filter .2s ease, transform .2s ease;
+  }
+  #launch-site:hover { filter: brightness(1.12); transform: translateY(-1px); }
+  body[data-theme="blue"] { --theme-accent:#168bff; }
+  body[data-theme="purple"] { --theme-accent:#b65cff; }
+  body[data-theme="green"] { --theme-accent:#00d084; }
+  body[data-theme="blue"] #brand::after { background:linear-gradient(90deg,transparent,#168bff,#73f4ff,transparent); }
+  body[data-theme="purple"] #brand::after { background:linear-gradient(90deg,transparent,#a855f7,#ff75d8,transparent); }
+  body[data-theme="green"] #brand::after { background:linear-gradient(90deg,transparent,#00d084,#c6ff5e,transparent); }
+  body[data-theme="blue"] #brand b span, body[data-theme="blue"] #site-footer strong { color:#168bff; }
+  body[data-theme="purple"] #brand b span, body[data-theme="purple"] #site-footer strong { color:#c084fc; }
+  body[data-theme="green"] #brand b span, body[data-theme="green"] #site-footer strong { color:#00d084; }
+  body[data-theme="blue"] #wrap, body[data-theme="blue"] .feature-card { border-color:rgba(22,139,255,.35); }
+  body[data-theme="purple"] #wrap, body[data-theme="purple"] .feature-card { border-color:rgba(168,85,247,.35); }
+  body[data-theme="green"] #wrap, body[data-theme="green"] .feature-card { border-color:rgba(0,208,132,.35); }
+  body[data-theme="blue"] .feature-icon { color:#73f4ff; border-color:rgba(22,139,255,.4); background:rgba(22,139,255,.1); }
+  body[data-theme="purple"] .feature-icon { color:#ff75d8; border-color:rgba(168,85,247,.4); background:rgba(168,85,247,.1); }
+  body[data-theme="green"] .feature-icon { color:#c6ff5e; border-color:rgba(0,208,132,.4); background:rgba(0,208,132,.1); }
+  @media(max-width:430px) { #theme-picker { padding:16px; } .theme-options { gap:8px; } .theme-option { padding:9px; column-gap:7px; } }
+
+  </style>
 </head>
 <body>
 <div id="brand"><span class="brand-mark" aria-hidden="true">M</span><b>MAHMOUD <span>MOHAMED</span></b></div>
+
+<section id="theme-picker" aria-label="اختيار الثيم">
+  <h2>اختار الثيم المناسب ليك</h2>
+  <p class="theme-note">اختار شكل الموقع، وهيفضل محفوظ حتى المرة الجاية.</p>
+  <div class="theme-options">
+    <button class="theme-option" type="button" data-pick-theme="red" aria-pressed="true"><span class="theme-swatch swatch-red"></span><b>Gaming Red</b><small>أحمر نيون</small></button>
+    <button class="theme-option" type="button" data-pick-theme="blue" aria-pressed="false"><span class="theme-swatch swatch-blue"></span><b>Cyber Blue</b><small>أزرق سايبَر</small></button>
+    <button class="theme-option" type="button" data-pick-theme="purple" aria-pressed="false"><span class="theme-swatch swatch-purple"></span><b>Neon Purple</b><small>بنفسجي رقمي</small></button>
+    <button class="theme-option" type="button" data-pick-theme="green" aria-pressed="false"><span class="theme-swatch swatch-green"></span><b>Matrix Green</b><small>أخضر ماتريكس</small></button>
+  </div>
+  <button id="launch-site" type="button">دخول إلى الموقع ←</button>
+</section>
+
 <div id="wrap">
   <div id="state">detecting firmware...</div>
   <div id="det"></div>
@@ -346,7 +408,33 @@
     var cacheEl = document.getElementById("cache");
     function setState(t, c) { stateEl.textContent = t; stateEl.className = c || ""; }
     function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
+
     var params = new URLSearchParams(location.search);
+    var allowedThemes = ["red", "blue", "purple", "green"];
+    var chosenTheme = "red";
+    try {
+      var savedTheme = localStorage.getItem("mahmoud-theme");
+      if (allowedThemes.indexOf(savedTheme) !== -1) chosenTheme = savedTheme;
+    } catch (e) {}
+    function applyTheme(theme) {
+      if (allowedThemes.indexOf(theme) === -1) return;
+      chosenTheme = theme;
+      document.body.setAttribute("data-theme", theme);
+      document.querySelectorAll("[data-pick-theme]").forEach(function (button) {
+        button.setAttribute("aria-pressed", button.getAttribute("data-pick-theme") === theme ? "true" : "false");
+      });
+      try { localStorage.setItem("mahmoud-theme", theme); } catch (e) {}
+    }
+    applyTheme(chosenTheme);
+    document.querySelectorAll("[data-pick-theme]").forEach(function (button) {
+      button.addEventListener("click", function () { applyTheme(button.getAttribute("data-pick-theme")); });
+    });
+    var launchButton = document.getElementById("launch-site");
+    launchButton.addEventListener("click", function () {
+      try { localStorage.setItem("mahmoud-theme", chosenTheme); } catch (e) {}
+      location.href = "jb.html" + location.search;
+    });
+
 
     // Firmwares this build has a MEASURED kernel table for. jb.js still runs its
     // own kernel-table-present gate, so this is UX only -- an unlisted firmware
@@ -371,7 +459,12 @@
                      : " &middot; غير مدرج في قائمة الأنظمة المدعومة");
 
     var target = "jb.html" + location.search;
-    function go() { setState("جاري فتح صفحة التفعيل...", "warn"); location.replace(target); }
+
+    function go() {
+      setState("اختار الثيم اللي يعجبك وبعدها ادخل للموقع", "warn");
+      document.getElementById("theme-picker").scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
 
     function waitForTap(msg, action) {
         setState(msg, "warn");
