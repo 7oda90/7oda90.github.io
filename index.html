@@ -416,6 +416,45 @@
     .feature-card, .clock-item strong { animation: none !important; }
   }
 
+
+  /* Marvel-inspired palettes; the original four themes remain unchanged */
+  .swatch-ironman { background:linear-gradient(135deg,#c8102e 0 48%,#f7c948 49% 100%); }
+  .swatch-spiderman { background:linear-gradient(135deg,#e62429 0 50%,#1768ac 51% 100%); }
+  .swatch-captain { background:linear-gradient(135deg,#173f7a 0 45%,#f5f7fa 46% 62%,#c62835 63%); }
+  .swatch-hulk { background:linear-gradient(135deg,#4caf50 0 50%,#6a1b9a 51%); }
+  .swatch-thor { background:linear-gradient(135deg,#177ddc 0 50%,#f4c542 51%); }
+  .swatch-panther { background:linear-gradient(135deg,#090a12 0 50%,#8a2be2 51%); }
+  body[data-theme="ironman"] { --theme-accent:#f4c542; --neon-red:#e62429; --neon-cyan:#f4c542; }
+  body[data-theme="spiderman"] { --theme-accent:#e62429; --neon-red:#e62429; --neon-cyan:#168bff; }
+  body[data-theme="captain"] { --theme-accent:#2878c8; --neon-red:#c62835; --neon-cyan:#8cc8ff; }
+  body[data-theme="hulk"] { --theme-accent:#4caf50; --neon-red:#4caf50; --neon-cyan:#b66cff; }
+  body[data-theme="thor"] { --theme-accent:#177ddc; --neon-red:#177ddc; --neon-cyan:#f4c542; }
+  body[data-theme="panther"] { --theme-accent:#a855f7; --neon-red:#8a2be2; --neon-cyan:#d9b3ff; }
+  body[data-theme="ironman"] { background:radial-gradient(ellipse at 12% 12%,rgba(230,36,41,.2),transparent 38%),radial-gradient(ellipse at 90% 45%,rgba(244,197,66,.13),transparent 34%),linear-gradient(145deg,#09080a,#1a0b0d 55%,#050508); }
+  body[data-theme="spiderman"] { background:radial-gradient(ellipse at 12% 12%,rgba(230,36,41,.2),transparent 38%),radial-gradient(ellipse at 90% 45%,rgba(22,104,172,.18),transparent 34%),linear-gradient(145deg,#070912,#101a2b 55%,#050508); }
+  body[data-theme="captain"] { background:radial-gradient(ellipse at 12% 12%,rgba(40,120,200,.2),transparent 38%),radial-gradient(ellipse at 90% 45%,rgba(198,40,53,.13),transparent 34%),linear-gradient(145deg,#070b14,#10182a 55%,#050508); }
+  body[data-theme="hulk"] { background:radial-gradient(ellipse at 12% 12%,rgba(76,175,80,.2),transparent 38%),radial-gradient(ellipse at 90% 45%,rgba(106,27,154,.18),transparent 34%),linear-gradient(145deg,#070c09,#15101d 55%,#050508); }
+  body[data-theme="thor"] { background:radial-gradient(ellipse at 12% 12%,rgba(23,125,220,.2),transparent 38%),radial-gradient(ellipse at 90% 45%,rgba(244,197,66,.13),transparent 34%),linear-gradient(145deg,#060a12,#101726 55%,#050508); }
+  body[data-theme="panther"] { background:radial-gradient(ellipse at 12% 12%,rgba(138,43,226,.2),transparent 38%),radial-gradient(ellipse at 90% 45%,rgba(217,179,255,.1),transparent 34%),linear-gradient(145deg,#07060d,#130c1c 55%,#050508); }
+  body[data-theme="ironman"] #brand::after { background:linear-gradient(90deg,transparent,#e62429,#f4c542,transparent); }
+  body[data-theme="spiderman"] #brand::after { background:linear-gradient(90deg,transparent,#e62429,#168bff,transparent); }
+  body[data-theme="captain"] #brand::after { background:linear-gradient(90deg,transparent,#c62835,#8cc8ff,transparent); }
+  body[data-theme="hulk"] #brand::after { background:linear-gradient(90deg,transparent,#4caf50,#b66cff,transparent); }
+  body[data-theme="thor"] #brand::after { background:linear-gradient(90deg,transparent,#177ddc,#f4c542,transparent); }
+  body[data-theme="panther"] #brand::after { background:linear-gradient(90deg,transparent,#8a2be2,#d9b3ff,transparent); }
+  body[data-theme="ironman"] #wrap, body[data-theme="ironman"] .feature-card, body[data-theme="ironman"] #system-clock { border-color:rgba(244,197,66,.38); }
+  body[data-theme="spiderman"] #wrap, body[data-theme="spiderman"] .feature-card, body[data-theme="spiderman"] #system-clock { border-color:rgba(230,36,41,.38); }
+  body[data-theme="captain"] #wrap, body[data-theme="captain"] .feature-card, body[data-theme="captain"] #system-clock { border-color:rgba(40,120,200,.4); }
+  body[data-theme="hulk"] #wrap, body[data-theme="hulk"] .feature-card, body[data-theme="hulk"] #system-clock { border-color:rgba(76,175,80,.4); }
+  body[data-theme="thor"] #wrap, body[data-theme="thor"] .feature-card, body[data-theme="thor"] #system-clock { border-color:rgba(23,125,220,.4); }
+  body[data-theme="panther"] #wrap, body[data-theme="panther"] .feature-card, body[data-theme="panther"] #system-clock { border-color:rgba(138,43,226,.4); }
+  body[data-theme="ironman"] .feature-icon { color:#f4c542; border-color:rgba(244,197,66,.4); background:rgba(244,197,66,.1); }
+  body[data-theme="spiderman"] .feature-icon { color:#168bff; border-color:rgba(230,36,41,.4); background:rgba(230,36,41,.1); }
+  body[data-theme="captain"] .feature-icon { color:#8cc8ff; border-color:rgba(40,120,200,.4); background:rgba(40,120,200,.1); }
+  body[data-theme="hulk"] .feature-icon { color:#b66cff; border-color:rgba(76,175,80,.4); background:rgba(76,175,80,.1); }
+  body[data-theme="thor"] .feature-icon { color:#f4c542; border-color:rgba(23,125,220,.4); background:rgba(23,125,220,.1); }
+  body[data-theme="panther"] .feature-icon { color:#d9b3ff; border-color:rgba(138,43,226,.4); background:rgba(138,43,226,.1); }
+
 </style>
 </head>
 <body>
@@ -436,6 +475,12 @@
     <button class="theme-option" type="button" data-pick-theme="blue" aria-pressed="false"><span class="theme-swatch swatch-blue"></span><b>Cyber Blue</b><small>أزرق سايبَر</small></button>
     <button class="theme-option" type="button" data-pick-theme="purple" aria-pressed="false"><span class="theme-swatch swatch-purple"></span><b>Neon Purple</b><small>بنفسجي رقمي</small></button>
     <button class="theme-option" type="button" data-pick-theme="green" aria-pressed="false"><span class="theme-swatch swatch-green"></span><b>Matrix Green</b><small>أخضر ماتريكس</small></button>
+    <button class="theme-option" type="button" data-pick-theme="ironman" aria-pressed="false"><span class="theme-swatch swatch-ironman"></span><b>Iron Man</b><small>أحمر وذهبي</small></button>
+    <button class="theme-option" type="button" data-pick-theme="spiderman" aria-pressed="false"><span class="theme-swatch swatch-spiderman"></span><b>Spider-Man</b><small>أحمر وأزرق</small></button>
+    <button class="theme-option" type="button" data-pick-theme="captain" aria-pressed="false"><span class="theme-swatch swatch-captain"></span><b>Captain America</b><small>أزرق وفضي وأحمر</small></button>
+    <button class="theme-option" type="button" data-pick-theme="hulk" aria-pressed="false"><span class="theme-swatch swatch-hulk"></span><b>Hulk</b><small>أخضر وبنفسجي</small></button>
+    <button class="theme-option" type="button" data-pick-theme="thor" aria-pressed="false"><span class="theme-swatch swatch-thor"></span><b>Thor</b><small>أزرق البرق وذهبي</small></button>
+    <button class="theme-option" type="button" data-pick-theme="panther" aria-pressed="false"><span class="theme-swatch swatch-panther"></span><b>Black Panther</b><small>أسود وبنفسجي</small></button>
   </div>
   <button id="launch-site" type="button">دخول إلى الموقع ←</button>
 </section>
@@ -490,7 +535,7 @@
     updateSystemClock();
     window.setInterval(updateSystemClock, 1000);
 
-    var allowedThemes = ["red", "blue", "purple", "green"];
+    var allowedThemes = ["red", "blue", "purple", "green", "ironman", "spiderman", "captain", "hulk", "thor", "panther"];
     var chosenTheme = "red";
     try {
       var savedTheme = localStorage.getItem("mahmoud-theme");
