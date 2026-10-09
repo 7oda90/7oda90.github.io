@@ -574,8 +574,35 @@
   @media(prefers-reduced-motion:reduce) { #background-menu-toggle { scroll-behavior:auto; } }
 
 </style>
+<style>#mm-particles{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.64;contain:strict}
+#mm-intro{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:24px;color:#fff;text-align:center;direction:rtl;background:radial-gradient(ellipse at 50% 42%,rgba(255,48,79,.18),transparent 42%),linear-gradient(145deg,rgba(4,4,9,.98),rgba(12,7,14,.985));-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);transition:opacity .45s ease,visibility .45s ease}
+#mm-intro.mm-intro-hidden{opacity:0;visibility:hidden;pointer-events:none}.mm-intro-inner{width:min(100%,620px)}.mm-intro-kicker{color:#ff6b80;font:800 11px/1.4 ui-monospace,monospace;letter-spacing:.24em}
+.mm-intro-monogram{display:grid;place-items:center;width:82px;height:82px;margin:18px auto;border:1px solid rgba(255,48,79,.7);border-radius:25px;background:linear-gradient(145deg,rgba(255,48,79,.3),rgba(255,255,255,.035));box-shadow:0 0 32px rgba(255,48,79,.25),inset 0 1px rgba(255,255,255,.3);font-size:38px;font-weight:950;transform:rotate(-5deg)}
+.mm-intro-title{margin:0;font-size:clamp(27px,7vw,52px);line-height:1.14;font-weight:950;letter-spacing:.025em;text-shadow:0 0 28px rgba(255,48,79,.25)}.mm-intro-title span{color:#ff304f}
+.mm-intro-copy{max-width:420px;margin:16px auto 24px;color:#b9b9c8;font-size:14px}
+#mm-intro-enter{min-width:190px;padding:14px 24px;border:1px solid #ff687d;border-radius:13px;color:#fff;background:linear-gradient(110deg,#ff304f,#a50f2c);box-shadow:0 8px 30px rgba(255,48,79,.24);cursor:pointer;font:850 15px/1.3 "Segoe UI",sans-serif}
+#mm-intro-enter:focus-visible{outline:2px solid #fff;outline-offset:4px}.mm-intro-hint{display:block;margin-top:13px;color:#777786;font-size:11px}
+#mm-profile{position:relative;z-index:1;display:flex;align-items:center;gap:14px;width:min(calc(100% - 30px),650px);margin:12px auto 18px;padding:15px;border:1px solid rgba(255,48,79,.28);border-radius:18px;background:linear-gradient(120deg,rgba(25,17,27,.88),rgba(10,10,17,.9));box-shadow:0 12px 32px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.05);transform-style:preserve-3d;transition:transform .18s ease,border-color .2s ease}
+.mm-profile-avatar{display:grid;place-items:center;flex:0 0 54px;height:54px;border-radius:17px;border:1px solid rgba(255,48,79,.65);color:#fff;font-size:24px;font-weight:950;background:linear-gradient(145deg,#ff304f,#21101b 70%);box-shadow:0 0 20px rgba(255,48,79,.17)}
+.mm-profile-info{min-width:0;flex:1}.mm-profile-name{display:block;color:#fff;font-size:15px;font-weight:900;letter-spacing:.035em}.mm-profile-role{display:block;margin-top:3px;color:#aaaaba;font-size:11px}
+.mm-profile-tag{flex:0 0 auto;padding:6px 8px;border:1px solid rgba(255,48,79,.28);border-radius:9px;color:#ff788b;background:rgba(255,48,79,.07);font:800 9px/1.2 ui-monospace,monospace}
+#mm-music{border-color:rgba(255,48,79,.36);box-shadow:inset 0 1px rgba(255,255,255,.2),0 12px 34px rgba(0,0,0,.4),0 0 22px rgba(255,48,79,.08)}
+#mm-music .mm-music-title{display:flex;align-items:center;gap:7px}.mm-equalizer{display:inline-flex;align-items:center;gap:2px;height:17px}
+.mm-equalizer i{display:block;width:3px;height:5px;border-radius:3px;background:#ff526b;animation:mmEqualize .7s ease-in-out infinite alternate}
+.mm-equalizer i:nth-child(2){height:12px;animation-delay:.18s}.mm-equalizer i:nth-child(3){height:8px;animation-delay:.32s}.mm-equalizer i:nth-child(4){height:14px;animation-delay:.1s}
+@keyframes mmEqualize{to{transform:scaleY(.45);opacity:.6}}
+#mm-music .mm-music-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:7px}#mm-music .mm-open-track{color:#ff8999;font-size:10px;text-decoration:none}#mm-music .mm-open-track:hover{text-decoration:underline}#mm-music.mm-collapsed .mm-music-actions{display:none}
+@media(max-width:430px){.mm-profile-avatar{flex-basis:46px;height:46px;border-radius:14px}.mm-profile-name{font-size:13px}.mm-profile-tag{font-size:8px}#mm-intro{padding:18px}}
+@media(prefers-reduced-motion:reduce){#mm-intro{transition:none}.mm-intro-monogram{transform:none}.mm-equalizer i{animation:none}#mm-profile{transition:none}}</style>
 </head>
 <body>
+<canvas id="mm-particles" aria-hidden="true"></canvas>
+<section id="mm-intro" role="dialog" aria-modal="true" aria-labelledby="mm-intro-title"><div class="mm-intro-inner">
+<div class="mm-intro-kicker">PERSONAL DIGITAL EXPERIENCE</div><div class="mm-intro-monogram" aria-hidden="true">M</div>
+<h1 class="mm-intro-title" id="mm-intro-title">MAHMOUD <span>MOHAMED</span></h1>
+<p class="mm-intro-copy">أهلاً بيك في تجربتي الرقمية — تصميم Gaming، طاقة نيون، وتفاصيل معمولة بعناية.</p>
+<button id="mm-intro-enter" type="button">ابدأ التجربة <span aria-hidden="true">↗</span></button><span class="mm-intro-hint">اضغط للمتابعة · ENTER</span>
+</div></section>
 
 <button id="background-menu-toggle" type="button" aria-label="اختيار خلفية الموقع" aria-controls="background-picker" aria-expanded="false" title="الخلفيات">🎨</button>
 <div id="background-overlay" aria-hidden="true"></div>
@@ -598,6 +625,7 @@
   <div class="clock-divider" aria-hidden="true"></div>
   <div class="clock-item"><span class="clock-symbol" aria-hidden="true">▦</span><div><small>تاريخ اليوم</small><strong id="local-date">--/--/----</strong></div></div>
 </section>
+<section id="mm-profile" aria-label="الملف الشخصي"><span class="mm-profile-avatar" aria-hidden="true">M</span><span class="mm-profile-info"><span class="mm-profile-name">MAHMOUD MOHAMED</span><span class="mm-profile-role">Gaming • Digital Experience • Personal Website</span></span><span class="mm-profile-tag">OWNER</span></section>
 
 <div id="homepage-launch"><button id="launch-site" type="button">دخول إلى الموقع <span aria-hidden="true">←</span></button><p>اضغط للدخول، أو استخدم ⚙ لتغيير الثيم</p></div>
 
@@ -863,7 +891,7 @@
 
 <div id="mm-music" aria-label="مشغل موسيقى الموقع">
   <div class="mm-music-head">
-    <div class="mm-music-title">🎵 RiveR — Solo<span class="mm-music-subtitle">FitGirl-inspired soundtrack</span></div>
+    <div class="mm-music-title"><span class="mm-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>RiveR — Solo<span class="mm-music-subtitle">ORIGINAL GAMING SOUNDTRACK</span></span></div>
     <button class="mm-music-toggle" id="mm-music-toggle" type="button" aria-expanded="true" aria-label="تصغير مشغل الموسيقى">−</button>
   </div>
   <iframe
@@ -872,6 +900,7 @@
     allow="autoplay; encrypted-media; picture-in-picture"
     referrerpolicy="strict-origin-when-cross-origin"
     allowfullscreen></iframe>
+  <div class="mm-music-actions"><a class="mm-open-track" href="https://www.youtube.com/watch?v=72QAAOaYW2M" target="_blank" rel="noopener noreferrer">فتح المسار على YouTube ↗</a></div>
   <p class="mm-music-note">لو التشغيل التلقائي اتمنع، اضغط تشغيل داخل المشغل. المتصفح ممكن يحتاج تفاعل منك.</p>
 </div>
 <script>
@@ -879,11 +908,15 @@
   var panel = document.getElementById("mm-music");
   var button = document.getElementById("mm-music-toggle");
   if (!panel || !button) return;
+  var collapsed = false;
+  try { collapsed = localStorage.getItem("mahmoud-music-collapsed") === "1"; } catch (e) {}
+  if (collapsed) { panel.classList.add("mm-collapsed"); button.textContent = "♫"; button.setAttribute("aria-expanded", "false"); button.setAttribute("aria-label", "فتح مشغل الموسيقى"); }
   button.addEventListener("click", function () {
-    var collapsed = panel.classList.toggle("mm-collapsed");
+    collapsed = panel.classList.toggle("mm-collapsed");
     button.textContent = collapsed ? "♫" : "−";
     button.setAttribute("aria-expanded", collapsed ? "false" : "true");
     button.setAttribute("aria-label", collapsed ? "فتح مشغل الموسيقى" : "تصغير مشغل الموسيقى");
+    try { localStorage.setItem("mahmoud-music-collapsed", collapsed ? "1" : "0"); } catch (e) {}
   });
 })();
 </script>
@@ -934,5 +967,22 @@ html.mm-page-shaking body { animation:mmPageShake .16s linear infinite; }
 })();
 </script>
 
+<script>(function(){
+var intro=document.getElementById("mm-intro"),enter=document.getElementById("mm-intro-enter"),skip=/(?:\?|&)log=1(?:&|$)/.test(location.search),introKey="mm-intro-seen:"+location.pathname;
+try{if(sessionStorage.getItem(introKey)==="1")skip=true}catch(e){}
+function dismiss(){if(!intro)return;intro.classList.add("mm-intro-hidden");intro.setAttribute("aria-hidden","true");try{sessionStorage.setItem(introKey,"1")}catch(e){}window.setTimeout(function(){if(intro.parentNode)intro.parentNode.removeChild(intro)},500)}
+if(skip)dismiss();if(enter)enter.addEventListener("click",dismiss);
+document.addEventListener("keydown",function(e){if(e.key==="Enter"&&intro&&!intro.classList.contains("mm-intro-hidden"))dismiss()});
+var canvas=document.getElementById("mm-particles");if(!canvas)return;var ctx=canvas.getContext("2d");if(!ctx)return;
+var ps=[],w=0,h=0,raf=0,last=0,reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function draw(staticOnly){ctx.clearRect(0,0,w,h);for(var i=0;i<ps.length;i++){var p=ps[i];if(!staticOnly&&!reduced){p.x+=p.vx;p.y+=p.vy;if(p.x< -4)p.x=w+4;else if(p.x>w+4)p.x=-4;if(p.y< -4)p.y=h+4;else if(p.y>h+4)p.y=-4}ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle="rgba(255,48,79,"+p.a+")";ctx.fill()}
+if(!staticOnly&&!reduced)for(var j=0;j<ps.length;j++)for(var k=j+1;k<ps.length;k++){var dx=ps[j].x-ps[k].x,dy=ps[j].y-ps[k].y,d=Math.sqrt(dx*dx+dy*dy);if(d<92){ctx.strokeStyle="rgba(255,48,79,"+((1-d/92)*.09)+")";ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(ps[j].x,ps[j].y);ctx.lineTo(ps[k].x,ps[k].y);ctx.stroke()}}}
+function resize(){var d=Math.min(window.devicePixelRatio||1,1.5);w=window.innerWidth;h=window.innerHeight;canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);ctx.setTransform(d,0,0,d,0,0);var n=Math.min(w<600?26:48,Math.max(16,Math.round(w*h/26000)));ps=[];for(var i=0;i<n;i++)ps.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.5+.5,a:Math.random()*.38+.12});draw(true)}
+function animate(t){raf=0;if(document.hidden||reduced)return;if(t-last>=33){draw(false);last=t}raf=requestAnimationFrame(animate)}
+function start(){if(!reduced&&!document.hidden&&!raf)raf=requestAnimationFrame(animate)}function stop(){if(raf)cancelAnimationFrame(raf);raf=0}
+window.addEventListener("resize",resize,{passive:true});document.addEventListener("visibilitychange",function(){if(document.hidden)stop();else start()});resize();start();
+var card=document.getElementById("mm-profile"),hoverOK=window.matchMedia&&window.matchMedia("(hover:hover) and (pointer:fine)").matches;
+if(card&&!reduced&&hoverOK){card.addEventListener("pointermove",function(e){var r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform="perspective(800px) rotateX("+(-y*3)+"deg) rotateY("+(x*4)+"deg)"});card.addEventListener("pointerleave",function(){card.style.transform=""})}
+})();</script>
 </body>
 </html>
