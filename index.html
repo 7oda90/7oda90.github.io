@@ -359,10 +359,36 @@
   body[data-theme="green"] .feature-icon { color:#c6ff5e; border-color:rgba(0,208,132,.4); background:rgba(0,208,132,.1); }
   @media(max-width:430px) { #theme-picker { padding:16px; } .theme-options { gap:8px; } .theme-option { padding:9px; column-gap:7px; } }
 
-  </style>
+  
+  #system-clock {
+    position:relative; z-index:1; width:min(100% - 30px,650px);
+    margin:18px auto 0; padding:15px 18px; display:flex; align-items:center;
+    justify-content:space-around; gap:14px; direction:rtl;
+    border:1px solid rgba(255,48,79,.3); border-radius:15px;
+    background:linear-gradient(120deg,rgba(20,20,31,.94),rgba(9,9,16,.94));
+    box-shadow:0 10px 28px rgba(0,0,0,.2);
+  }
+  .clock-item { display:flex; align-items:center; gap:11px; min-width:0; }
+  .clock-symbol { display:grid; place-items:center; flex:0 0 38px; height:38px; border-radius:11px; color:var(--theme-accent,#ff304f); background:rgba(255,255,255,.055); border:1px solid color-mix(in srgb,var(--theme-accent,#ff304f) 45%,transparent); font-size:22px; }
+  .clock-item small { display:block; color:#a4a4b5; font-size:11px; margin-bottom:2px; }
+  .clock-item strong { display:block; color:#fff; font-size:clamp(14px,3.8vw,18px); font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .clock-divider { width:1px; height:38px; background:rgba(255,255,255,.12); }
+  body[data-theme="blue"] #system-clock { border-color:rgba(22,139,255,.35); }
+  body[data-theme="purple"] #system-clock { border-color:rgba(168,85,247,.35); }
+  body[data-theme="green"] #system-clock { border-color:rgba(0,208,132,.35); }
+  @media(max-width:420px) { #system-clock { padding:12px 10px; gap:9px; } .clock-item { gap:7px; } .clock-symbol { flex-basis:32px; height:32px; font-size:18px; } .clock-item small { font-size:10px; } }
+
+</style>
 </head>
 <body>
 <div id="brand"><span class="brand-mark" aria-hidden="true">M</span><b>MAHMOUD <span>MOHAMED</span></b></div>
+
+<section id="system-clock" aria-label="التاريخ والوقت حسب الجهاز">
+  <div class="clock-item"><span class="clock-symbol" aria-hidden="true">◷</span><div><small>الوقت الآن</small><strong id="local-time">--:--:--</strong></div></div>
+  <div class="clock-divider" aria-hidden="true"></div>
+  <div class="clock-item"><span class="clock-symbol" aria-hidden="true">▦</span><div><small>تاريخ اليوم</small><strong id="local-date">--/--/----</strong></div></div>
+</section>
+
 
 <section id="theme-picker" aria-label="اختيار الثيم">
   <h2>اختار الثيم المناسب ليك</h2>
@@ -409,7 +435,23 @@
     function setState(t, c) { stateEl.textContent = t; stateEl.className = c || ""; }
     function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
 
+
     var params = new URLSearchParams(location.search);
+    function updateSystemClock() {
+      var now = new Date();
+      var timeEl = document.getElementById("local-time");
+      var dateEl = document.getElementById("local-date");
+      if (!timeEl || !dateEl) return;
+      timeEl.textContent = new Intl.DateTimeFormat("ar-EG", {
+        hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true
+      }).format(now);
+      dateEl.textContent = new Intl.DateTimeFormat("ar-EG", {
+        weekday: "long", year: "numeric", month: "long", day: "numeric"
+      }).format(now);
+    }
+    updateSystemClock();
+    window.setInterval(updateSystemClock, 1000);
+
     var allowedThemes = ["red", "blue", "purple", "green"];
     var chosenTheme = "red";
     try {
