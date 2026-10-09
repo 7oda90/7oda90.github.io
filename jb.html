@@ -330,18 +330,63 @@
       html[data-theme="blue"] #brand b { text-shadow:0 0 18px rgba(22,139,255,.4); }
       html[data-theme="purple"] #brand b { text-shadow:0 0 18px rgba(168,85,247,.4); }
       html[data-theme="green"] #brand b { text-shadow:0 0 18px rgba(0,208,132,.4); }
-    </style>
+    
+      #system-clock {
+        width: min(100% - 28px, 520px);
+        margin: 16px auto;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        flex-wrap: wrap;
+        border: 1px solid rgba(255,48,79,.32);
+        border-radius: 14px;
+        background: rgba(15,15,25,.92);
+        box-shadow: 0 8px 28px rgba(0,0,0,.2);
+        color: #f7f7fb;
+        text-align: center;
+      }
+      .clock-item { display:flex; align-items:center; gap:9px; }
+      .clock-item small { display:block; color:#a4a4b5; font-size:11px; }
+      .clock-item strong { display:block; color:#6cf6ff; font-size:15px; font-variant-numeric:tabular-nums; }
+      html[data-theme="blue"] #system-clock { border-color:rgba(22,139,255,.35); }
+      html[data-theme="purple"] #system-clock { border-color:rgba(168,85,247,.35); }
+      html[data-theme="green"] #system-clock { border-color:rgba(0,208,132,.35); }
+      @media(max-width:420px) { #system-clock { gap:12px; padding:11px 8px; } .clock-item { gap:6px; } .clock-item strong { font-size:13px; } }
+</style>
   </head>
   <body>
     <div id="brand">
       <span class="brand-mark" aria-hidden="true">M</span><b>MAHMOUD MOHAMED</b>
     </div>
+    <section id="system-clock" aria-label="التاريخ والوقت حسب الجهاز">
+      <div class="clock-item"><span aria-hidden="true">◷</span><div><small>الوقت الآن</small><strong id="local-time">--:--:--</strong></div></div>
+      <div class="clock-item"><span aria-hidden="true">▦</span><div><small>تاريخ اليوم</small><strong id="local-date">--/--/----</strong></div></div>
+    </section>
     <div id="spin"></div>
     <div id="msg"><span class="success-check" aria-hidden="true">✓</span><span id="msg-text">أعد تشغيل جهازك</span></div>
     <div id="wrap">
       <div id="state"></div>
       <div id="out"></div>
     </div>
+    <script>
+      (function () {
+        function updateSystemClock() {
+          var now = new Date();
+          var timeEl = document.getElementById("local-time");
+          var dateEl = document.getElementById("local-date");
+          if (!timeEl || !dateEl) return;
+          timeEl.textContent = new Intl.DateTimeFormat("ar-EG", {
+            hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23"
+          }).format(now);
+          dateEl.textContent = new Intl.DateTimeFormat("ar-EG", {
+            weekday: "long", day: "numeric", month: "long", year: "numeric"
+          }).format(now);
+        }
+        updateSystemClock();
+        window.setInterval(updateSystemClock, 1000);
+      })();
+    </script>
     <script type="module">
       import "./jb.js?v=19";
     </script>
