@@ -305,6 +305,32 @@
       }
 
     </style>
+  
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("mahmoud-theme") || "red";
+          if (["red","blue","purple","green"].indexOf(theme) !== -1) {
+            document.documentElement.setAttribute("data-theme", theme);
+            document.addEventListener("DOMContentLoaded", function () {
+              document.body.setAttribute("data-theme", theme);
+            });
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <style>
+      html[data-theme="blue"] { --neon-red:#168bff; --neon-cyan:#73f4ff; --line:rgba(22,139,255,.34); }
+      html[data-theme="purple"] { --neon-red:#a855f7; --neon-cyan:#ff75d8; --line:rgba(168,85,247,.34); }
+      html[data-theme="green"] { --neon-red:#00d084; --neon-cyan:#c6ff5e; --line:rgba(0,208,132,.34); }
+      html[data-theme="blue"] body { background:radial-gradient(ellipse at 14% 12%,rgba(22,139,255,.18),transparent 38%),radial-gradient(ellipse at 88% 48%,rgba(115,244,255,.09),transparent 35%),linear-gradient(145deg,#050811 0%,#09111c 54%,#04070c 100%); }
+      html[data-theme="purple"] body { background:radial-gradient(ellipse at 14% 12%,rgba(168,85,247,.18),transparent 38%),radial-gradient(ellipse at 88% 48%,rgba(255,117,216,.09),transparent 35%),linear-gradient(145deg,#0a0610 0%,#130a1b 54%,#07040b 100%); }
+      html[data-theme="green"] body { background:radial-gradient(ellipse at 14% 12%,rgba(0,208,132,.16),transparent 38%),radial-gradient(ellipse at 88% 48%,rgba(198,255,94,.08),transparent 35%),linear-gradient(145deg,#040b08 0%,#07140f 54%,#030805 100%); }
+      html[data-theme="blue"] #brand b { text-shadow:0 0 18px rgba(22,139,255,.4); }
+      html[data-theme="purple"] #brand b { text-shadow:0 0 18px rgba(168,85,247,.4); }
+      html[data-theme="green"] #brand b { text-shadow:0 0 18px rgba(0,208,132,.4); }
+    </style>
   </head>
   <body>
     <div id="brand">
