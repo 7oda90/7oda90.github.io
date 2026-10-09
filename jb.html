@@ -367,6 +367,57 @@
     #theme-menu-close, .theme-swatch, .success-check { background-color:rgba(255,255,255,.12); }
   }
 
+
+  /* Manual Digital Art background picker — visual only */
+  #background-menu-toggle {
+    position:fixed; left:16px; bottom:16px; z-index:30;
+    display:grid; place-items:center; width:48px; height:48px;
+    border:1px solid rgba(255,255,255,.28); border-radius:16px;
+    color:#fff; font-size:22px; cursor:pointer;
+    background:linear-gradient(145deg,rgba(255,255,255,.19),rgba(255,255,255,.055));
+    -webkit-backdrop-filter:blur(18px) saturate(170%);
+    backdrop-filter:blur(18px) saturate(170%);
+    box-shadow:inset 0 1px rgba(255,255,255,.42),0 8px 24px rgba(0,0,0,.35),0 0 22px color-mix(in srgb,var(--theme-accent,var(--neon-red,#ff304f)) 22%,transparent);
+  }
+  #background-menu-toggle:focus-visible { outline:2px solid var(--theme-accent,#ff304f); outline-offset:3px; }
+  #background-overlay { display:none; position:fixed; inset:0; z-index:31; background:rgba(2,3,10,.68); -webkit-backdrop-filter:blur(7px); backdrop-filter:blur(7px); }
+  #background-picker {
+    display:none; position:fixed; z-index:32; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:min(calc(100% - 28px),560px); max-height:min(82vh,700px); overflow:auto;
+    padding:20px; color:#f7f7fb; text-align:right;
+    border:1px solid rgba(255,255,255,.24); border-radius:22px;
+    background:linear-gradient(145deg,rgba(23,25,40,.88),rgba(7,8,17,.91));
+    -webkit-backdrop-filter:blur(24px) saturate(165%); backdrop-filter:blur(24px) saturate(165%);
+    box-shadow:inset 0 1px rgba(255,255,255,.24),0 25px 80px rgba(0,0,0,.5),0 0 35px color-mix(in srgb,var(--theme-accent,var(--neon-red,#ff304f)) 14%,transparent);
+  }
+  body.background-menu-open #background-overlay, body.background-menu-open #background-picker { display:block; }
+  #background-picker h2 { margin:0 42px 4px 0; font-size:20px; }
+  #background-picker p { margin:0 0 15px; color:#b9c2d3; font-size:13px; }
+  #background-menu-close { position:absolute; top:14px; left:14px; width:35px; height:35px; border:1px solid rgba(255,255,255,.22); border-radius:12px; color:white; background:rgba(255,255,255,.1); font-size:21px; cursor:pointer; }
+  .background-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .background-option {
+    min-width:0; display:flex; flex-direction:column; gap:9px; padding:10px;
+    border:1px solid rgba(255,255,255,.15); border-radius:15px; color:#fff;
+    background:rgba(255,255,255,.045); text-align:right; font:inherit; cursor:pointer;
+  }
+  .background-option[aria-pressed="true"] { border-color:var(--theme-accent,#ff304f); background:rgba(255,255,255,.09); box-shadow:0 0 20px color-mix(in srgb,var(--theme-accent,#ff304f) 20%,transparent),inset 0 1px rgba(255,255,255,.2); }
+  .background-preview { display:block; width:100%; height:66px; border:1px solid rgba(255,255,255,.2); border-radius:10px; box-shadow:inset 0 1px rgba(255,255,255,.25); }
+  .preview-digital { background:radial-gradient(circle at 20% 30%,rgba(255,48,79,.95),transparent 28%),radial-gradient(circle at 80% 75%,rgba(108,246,255,.7),transparent 25%),linear-gradient(135deg,#090810,#24101f 55%,#05060d); }
+  .preview-cosmic { background:radial-gradient(circle at 25% 25%,#c084fc,transparent 24%),radial-gradient(circle at 80% 70%,#ec4899,transparent 27%),linear-gradient(135deg,#090617,#1d1035 55%,#05040c); }
+  .preview-energy { background:radial-gradient(circle at 20% 70%,#06b6d4,transparent 26%),radial-gradient(circle at 80% 20%,#2563eb,transparent 30%),linear-gradient(135deg,#030817,#0a2040 55%,#030611); }
+  .preview-matrix { background:radial-gradient(circle at 75% 25%,rgba(163,230,53,.8),transparent 23%),radial-gradient(circle at 20% 80%,rgba(16,185,129,.65),transparent 25%),linear-gradient(135deg,#020a08,#09251b 55%,#030706); }
+  .preview-void { background:radial-gradient(circle at 50% 15%,rgba(255,255,255,.24),transparent 24%),radial-gradient(circle at 80% 85%,rgba(148,163,184,.22),transparent 28%),linear-gradient(135deg,#03040a,#171b29 55%,#05060a); }
+  .background-option strong { font-size:13px; }
+  .background-option small { color:#b9c2d3; font-size:11px; }
+  /* CSS Digital Art layers keep backgrounds lightweight and offline-friendly. */
+  html body[data-background="digital"] { background:radial-gradient(ellipse at 16% 20%,rgba(255,48,79,.28),transparent 33%),radial-gradient(ellipse at 82% 76%,rgba(108,246,255,.18),transparent 30%),conic-gradient(from 220deg at 70% 35%,rgba(255,48,79,.12),transparent 24%,rgba(108,246,255,.09),transparent 56%),linear-gradient(145deg,#05050c 0%,#17101f 48%,#05060d 100%) !important; }
+  html body[data-background="cosmic"] { background:radial-gradient(ellipse at 18% 24%,rgba(192,132,252,.3),transparent 32%),radial-gradient(ellipse at 83% 70%,rgba(236,72,153,.2),transparent 30%),conic-gradient(from 40deg at 65% 38%,rgba(168,85,247,.12),transparent 28%,rgba(236,72,153,.1),transparent 62%),linear-gradient(145deg,#05040d 0%,#170d2c 50%,#05040a 100%) !important; }
+  html body[data-background="energy"] { background:radial-gradient(ellipse at 18% 75%,rgba(6,182,212,.26),transparent 32%),radial-gradient(ellipse at 82% 22%,rgba(37,99,235,.26),transparent 32%),conic-gradient(from 200deg at 55% 50%,rgba(6,182,212,.1),transparent 25%,rgba(37,99,235,.1),transparent 60%),linear-gradient(145deg,#020610 0%,#09172c 52%,#03050c 100%) !important; }
+  html body[data-background="matrix"] { background:radial-gradient(ellipse at 78% 20%,rgba(163,230,53,.2),transparent 30%),radial-gradient(ellipse at 20% 78%,rgba(16,185,129,.23),transparent 33%),conic-gradient(from 120deg at 60% 45%,rgba(16,185,129,.1),transparent 25%,rgba(163,230,53,.08),transparent 60%),linear-gradient(145deg,#020806 0%,#081a13 52%,#030604 100%) !important; }
+  html body[data-background="void"] { background:radial-gradient(ellipse at 50% 10%,rgba(203,213,225,.15),transparent 30%),radial-gradient(ellipse at 82% 82%,rgba(100,116,139,.16),transparent 32%),conic-gradient(from 200deg at 50% 50%,rgba(148,163,184,.08),transparent 30%,rgba(255,255,255,.045),transparent 62%),linear-gradient(145deg,#03040a 0%,#10131f 52%,#04050a 100%) !important; }
+  @media(max-width:430px) { #background-menu-toggle { left:12px; bottom:12px; width:44px; height:44px; border-radius:14px; } #background-picker { padding:15px; } .background-options { gap:8px; } .background-option { padding:8px; } .background-preview { height:56px; } }
+  @media(prefers-reduced-motion:reduce) { #background-menu-toggle { scroll-behavior:auto; } }
+
 </style>
   
     <script>
@@ -465,6 +516,21 @@
 </style>
   </head>
   <body>
+
+<button id="background-menu-toggle" type="button" aria-label="اختيار خلفية الموقع" aria-controls="background-picker" aria-expanded="false" title="الخلفيات">🎨</button>
+<div id="background-overlay" aria-hidden="true"></div>
+<section id="background-picker" role="dialog" aria-modal="true" aria-labelledby="background-picker-title">
+  <button id="background-menu-close" type="button" aria-label="إغلاق قائمة الخلفيات">×</button>
+  <h2 id="background-picker-title">خلفيات Digital Art</h2>
+  <p>اختار الخلفية اللي تعجبك، وهيفضل اختيارك محفوظ حتى المرة الجاية.</p>
+  <div class="background-options">
+    <button class="background-option" type="button" data-pick-background="digital" aria-pressed="true"><span class="background-preview preview-digital"></span><strong>Digital Energy</strong><small>أحمر ونيلي وسماوي</small></button>
+    <button class="background-option" type="button" data-pick-background="cosmic" aria-pressed="false"><span class="background-preview preview-cosmic"></span><strong>Cosmic Art</strong><small>بنفسجي ووردي</small></button>
+    <button class="background-option" type="button" data-pick-background="energy" aria-pressed="false"><span class="background-preview preview-energy"></span><strong>Blue Energy</strong><small>أزرق وكهرباء رقمية</small></button>
+    <button class="background-option" type="button" data-pick-background="matrix" aria-pressed="false"><span class="background-preview preview-matrix"></span><strong>Matrix World</strong><small>أخضر وتركواز</small></button>
+    <button class="background-option" type="button" data-pick-background="void" aria-pressed="false"><span class="background-preview preview-void"></span><strong>Dark Void</strong><small>داكنة وفخمة</small></button>
+  </div>
+</section>
     <div id="brand">
       <span class="brand-mark" aria-hidden="true">M</span><b>MAHMOUD MOHAMED</b>
     </div>
@@ -499,5 +565,39 @@
     <script type="module">
       import "./jb.js?v=19";
     </script>
+
+<script>
+(function () {
+  var allowed = ["digital","cosmic","energy","matrix","void"];
+  var body = document.body;
+  var toggle = document.getElementById("background-menu-toggle");
+  var close = document.getElementById("background-menu-close");
+  var overlay = document.getElementById("background-overlay");
+  var selected = "digital";
+  try {
+    var saved = localStorage.getItem("mahmoud-background");
+    if (allowed.indexOf(saved) !== -1) selected = saved;
+  } catch (e) {}
+  function applyBackground(name) {
+    if (allowed.indexOf(name) === -1) return;
+    selected = name;
+    body.setAttribute("data-background", name);
+    document.querySelectorAll("[data-pick-background]").forEach(function (button) {
+      button.setAttribute("aria-pressed", button.getAttribute("data-pick-background") === name ? "true" : "false");
+    });
+    try { localStorage.setItem("mahmoud-background", name); } catch (e) {}
+  }
+  function openMenu() { body.classList.add("background-menu-open"); toggle.setAttribute("aria-expanded","true"); }
+  function closeMenu() { body.classList.remove("background-menu-open"); toggle.setAttribute("aria-expanded","false"); }
+  applyBackground(selected);
+  toggle.addEventListener("click", function () { body.classList.contains("background-menu-open") ? closeMenu() : openMenu(); });
+  close.addEventListener("click", closeMenu);
+  overlay.addEventListener("click", closeMenu);
+  document.addEventListener("keydown", function (event) { if (event.key === "Escape") closeMenu(); });
+  document.querySelectorAll("[data-pick-background]").forEach(function (button) {
+    button.addEventListener("click", function () { applyBackground(button.getAttribute("data-pick-background")); });
+  });
+})();
+</script>
   </body>
 </html>
