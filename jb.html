@@ -145,7 +145,149 @@
     color: #fff; font-weight: 900; font-size: 21px;
     box-shadow: 0 0 22px rgba(255,48,79,.25), 0 0 42px rgba(108,246,255,.1);
   }
-</style>
+
+      /* Neon gaming / digital-art theme — visual only; runtime behavior stays intact. */
+      :root {
+        color-scheme: dark;
+        --neon-red: #ff304f;
+        --neon-cyan: #6cf6ff;
+        --ink: #07070b;
+        --panel: rgba(15, 15, 25, .94);
+        --line: rgba(255, 48, 79, .32);
+      }
+      html { min-height: 100%; background: var(--ink); }
+      body {
+        min-height: 100vh;
+        overflow-x: hidden;
+        background:
+          radial-gradient(ellipse at 14% 12%, rgba(255,48,79,.16), transparent 38%),
+          radial-gradient(ellipse at 88% 48%, rgba(108,246,255,.08), transparent 35%),
+          linear-gradient(145deg, #07070b 0%, #0c0b14 54%, #050508 100%);
+        color: #f7f7fb;
+        font: 15px/1.55 "Segoe UI", system-ui, sans-serif;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        opacity: .12;
+        background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+        background-size: 38px 38px;
+        mask-image: linear-gradient(to bottom, #000, transparent 88%);
+      }
+      #brand, #wrap { position: relative; z-index: 1; }
+      #brand {
+        padding: 18px 14px;
+        background: rgba(8,8,14,.88);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--line);
+        box-shadow: 0 8px 45px rgba(0,0,0,.28);
+      }
+      #brand::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+        width: 60%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--neon-red), var(--neon-cyan), transparent);
+      }
+      .brand-mark {
+        display: inline-grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        margin: 0 10px 0 0;
+        vertical-align: middle;
+        border: 1px solid rgba(255,48,79,.7);
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(255,48,79,.2), rgba(108,246,255,.08));
+        color: #fff;
+        font-size: 19px;
+        font-weight: 900;
+        box-shadow: 0 0 22px rgba(255,48,79,.24), 0 0 42px rgba(108,246,255,.1);
+      }
+      #brand b {
+        color: #fff;
+        font-size: clamp(14px, 3.5vw, 18px);
+        font-weight: 900;
+        letter-spacing: .09em;
+        text-shadow: 0 0 18px rgba(255,48,79,.4);
+      }
+      #spin {
+        z-index: 2;
+        border-color: rgba(255,255,255,.1);
+        border-top-color: var(--neon-red);
+        border-right-color: var(--neon-cyan);
+        filter: drop-shadow(0 0 9px rgba(255,48,79,.42));
+        width: 52px;
+        height: 52px;
+        margin: -26px 0 0 -26px;
+        animation: spin 1s linear infinite, pulse-glow 2s ease-in-out infinite;
+      }
+      @keyframes pulse-glow {
+        0%, 100% { filter: drop-shadow(0 0 5px rgba(255,48,79,.28)); }
+        50% { filter: drop-shadow(0 0 15px rgba(108,246,255,.4)); }
+      }
+      #msg {
+        z-index: 2;
+        padding: 24px;
+        color: #f7f7fb;
+        font-weight: 800;
+        letter-spacing: .04em;
+        text-shadow: 0 0 18px rgba(255,48,79,.2);
+      }
+      body.done #msg {
+        color: var(--neon-cyan);
+        text-shadow: 0 0 18px rgba(108,246,255,.32);
+      }
+      body.fail #msg { color: #ff526b; }
+      body.log #wrap {
+        width: min(100% - 28px, 1000px);
+        margin: 24px auto;
+        padding: clamp(14px, 3vw, 24px);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: linear-gradient(145deg, rgba(20,20,31,.95), rgba(8,8,15,.97));
+        box-shadow: 0 22px 75px rgba(0,0,0,.38), 0 0 34px rgba(255,48,79,.07);
+        backdrop-filter: blur(12px);
+      }
+      body.log #state {
+        color: #fff;
+        text-shadow: 0 0 16px rgba(255,48,79,.22);
+        overflow-wrap: anywhere;
+      }
+      body.log #out {
+        max-width: 100%;
+        height: calc(100vh - 155px);
+        min-height: 220px;
+        background: rgba(3,3,8,.8);
+        border: 1px solid rgba(108,246,255,.18);
+        border-radius: 12px;
+        padding: 14px;
+        color: #dfe6f2;
+        overflow-wrap: anywhere;
+        scrollbar-color: var(--neon-red) #101018;
+      }
+      .ok, .safe { color: var(--neon-cyan); }
+      .bad, .danger { color: #ff526b; }
+      .warn { color: #ffd166; }
+      code { color: #9deeff; }
+      @media (max-width: 520px) {
+        #brand { padding: 14px 10px; }
+        .brand-mark { width: 32px; height: 32px; font-size: 16px; margin-right: 7px; }
+        #brand b { letter-spacing: .04em; }
+        body.log #wrap { width: calc(100% - 18px); margin: 12px auto; padding: 12px; }
+        body.log #out { height: calc(100vh - 135px); font-size: 11px; padding: 10px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #spin { animation: spin 2s linear infinite; }
+      }
+
+    </style>
   </head>
   <body>
     <div id="brand">
