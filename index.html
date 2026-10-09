@@ -312,13 +312,18 @@
   }
 
   #theme-picker {
-    position: relative; z-index: 2;
-    width: min(100% - 30px, 650px); margin: 18px auto 30px;
+    display: none; position: fixed; z-index: 20; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: min( calc(100% - 28px), 650px); max-height: min(82vh, 760px); overflow-y: auto; margin: 0;
     padding: 22px; text-align: right;
     background: rgba(15,15,25,.96); border: 1px solid var(--theme-accent, #ff304f);
     border-radius: 18px; box-shadow: 0 16px 45px rgba(0,0,0,.28);
   }
-  #theme-picker h2 { margin: 0 0 4px; font-size: 21px; }
+  body.theme-menu-open::after { content:""; position:fixed; inset:0; z-index:19; background:rgba(0,0,0,.72); backdrop-filter:blur(5px); }
+  body.theme-menu-open #theme-picker { display:block; }
+  #theme-picker h2 { margin: 0 0 4px; font-size: 21px; padding-left:42px; }
+  #theme-menu-toggle { position:absolute; left:16px; top:18px; z-index:3; display:grid; place-items:center; width:42px; height:42px; border:1px solid rgba(255,48,79,.5); border-radius:13px; background:rgba(255,48,79,.09); color:#fff; cursor:pointer; font-size:22px; box-shadow:0 0 18px rgba(255,48,79,.12); }
+  #theme-menu-toggle:hover, #theme-menu-toggle:focus-visible { outline:2px solid var(--theme-accent,#ff304f); outline-offset:3px; }
+  #theme-menu-close { position:absolute; top:15px; left:15px; width:34px; height:34px; border:1px solid rgba(255,255,255,.16); border-radius:10px; background:rgba(255,255,255,.06); color:#fff; font-size:20px; cursor:pointer; }
   .theme-note { margin: 0 0 16px; color: #a4a4b5; font-size: 13px; }
   .theme-options { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
   .theme-option {
@@ -467,7 +472,7 @@
 </style>
 </head>
 <body>
-<div id="brand"><span class="brand-mark" aria-hidden="true">M</span><b>MAHMOUD <span>MOHAMED</span></b></div>
+<div id="brand"><button id="theme-menu-toggle" type="button" aria-label="فتح إعدادات الثيمات" aria-controls="theme-picker" aria-expanded="false" title="إعدادات الثيمات">⚙</button><span class="brand-mark" aria-hidden="true">M</span><b>MAHMOUD <span>MOHAMED</span></b></div>
 
 <section id="system-clock" aria-label="التاريخ والوقت حسب الجهاز">
   <div class="clock-item"><span class="clock-symbol" aria-hidden="true">◷</span><div><small>الوقت الآن</small><strong id="local-time">--:--:--</strong></div></div>
@@ -477,8 +482,9 @@
 
 
 
-<section id="theme-picker" aria-label="اختيار الثيم">
-  <h2>اختار الثيم المناسب ليك</h2>
+<section id="theme-picker" role="dialog" aria-modal="true" aria-labelledby="theme-picker-title" aria-label="اختيار الثيم">
+  <button id="theme-menu-close" type="button" aria-label="إغلاق قائمة الثيمات">×</button>
+  <h2 id="theme-picker-title">إعدادات الثيمات</h2>
   <p class="theme-note">اختار شكل الموقع، وهيفضل محفوظ حتى المرة الجاية.</p>
   <div class="theme-options">
     <button class="theme-option" type="button" data-pick-theme="red" aria-pressed="true"><span class="theme-swatch swatch-red"></span><b>Gaming Red</b><small>أحمر نيون</small></button>
@@ -564,6 +570,13 @@
       try { localStorage.setItem("mahmoud-theme", theme); } catch (e) {}
     }
     applyTheme(chosenTheme);
+    var themeMenuToggle = document.getElementById("theme-menu-toggle");
+    var themeMenuClose = document.getElementById("theme-menu-close");
+    function openThemeMenu() { document.body.classList.add("theme-menu-open"); themeMenuToggle.setAttribute("aria-expanded", "true"); }
+    function closeThemeMenu() { document.body.classList.remove("theme-menu-open"); themeMenuToggle.setAttribute("aria-expanded", "false"); }
+    themeMenuToggle.addEventListener("click", function () { if (document.body.classList.contains("theme-menu-open")) closeThemeMenu(); else openThemeMenu(); });
+    themeMenuClose.addEventListener("click", closeThemeMenu);
+    document.addEventListener("keydown", function (event) { if (event.key === "Escape") closeThemeMenu(); });
     document.querySelectorAll("[data-pick-theme]").forEach(function (button) {
       button.addEventListener("click", function () { applyTheme(button.getAttribute("data-pick-theme")); });
     });
@@ -600,7 +613,7 @@
 
     function go() {
       setState("اختار الثيم اللي يعجبك وبعدها ادخل للموقع", "warn");
-      document.getElementById("theme-picker").scrollIntoView({ behavior: "smooth", block: "center" });
+      openThemeMenu();
     }
 
 
