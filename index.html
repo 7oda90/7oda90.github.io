@@ -464,6 +464,20 @@
   body[data-theme="panther"] .feature-icon { color:#d9b3ff; border-color:rgba(138,43,226,.4); background:rgba(138,43,226,.1); }
 
 
+
+  /* Theme-aware logo badge */
+  .brand-mark { transition:background .2s ease,border-color .2s ease,box-shadow .2s ease,color .2s ease; }
+  body[data-theme="red"] .brand-mark, html[data-theme="red"] .brand-mark { color:#fff; border-color:#ff304f; background:linear-gradient(135deg,#ff304f 0%,#15151f 58%,#6cf6ff 100%); box-shadow:0 0 24px rgba(255,48,79,.35); }
+  body[data-theme="blue"] .brand-mark, html[data-theme="blue"] .brand-mark { color:#fff; border-color:#168bff; background:linear-gradient(135deg,#168bff,#101a32 58%,#73f4ff); box-shadow:0 0 24px rgba(22,139,255,.4); }
+  body[data-theme="purple"] .brand-mark, html[data-theme="purple"] .brand-mark { color:#fff; border-color:#b65cff; background:linear-gradient(135deg,#a855f7,#20102e 58%,#ff75d8); box-shadow:0 0 24px rgba(168,85,247,.4); }
+  body[data-theme="green"] .brand-mark, html[data-theme="green"] .brand-mark { color:#fff; border-color:#00d084; background:linear-gradient(135deg,#00d084,#0c2018 58%,#c6ff5e); box-shadow:0 0 24px rgba(0,208,132,.4); }
+  body[data-theme="ironman"] .brand-mark, html[data-theme="ironman"] .brand-mark { color:#f4c542; border-color:#f4c542; background:linear-gradient(135deg,#e62429,#250b0d 55%,#f4c542); box-shadow:0 0 24px rgba(244,197,66,.4); }
+  body[data-theme="spiderman"] .brand-mark, html[data-theme="spiderman"] .brand-mark { color:#fff; border-color:#e62429; background:linear-gradient(135deg,#e62429 0 48%,#101a2b 49% 58%,#168bff); box-shadow:0 0 24px rgba(230,36,41,.4); }
+  body[data-theme="captain"] .brand-mark, html[data-theme="captain"] .brand-mark { color:#fff; border-color:#8cc8ff; background:radial-gradient(circle,#c62835 0 24%,#f5f7fa 25% 42%,#2878c8 43% 70%,#c62835 71%); box-shadow:0 0 24px rgba(40,120,200,.4); }
+  body[data-theme="hulk"] .brand-mark, html[data-theme="hulk"] .brand-mark { color:#d8ffb0; border-color:#4caf50; background:linear-gradient(135deg,#4caf50,#101b13 55%,#6a1b9a); box-shadow:0 0 24px rgba(76,175,80,.4); }
+  body[data-theme="thor"] .brand-mark, html[data-theme="thor"] .brand-mark { color:#f4c542; border-color:#177ddc; background:linear-gradient(135deg,#177ddc,#101827 55%,#f4c542); box-shadow:0 0 24px rgba(23,125,220,.4); }
+  body[data-theme="panther"] .brand-mark, html[data-theme="panther"] .brand-mark { color:#d9b3ff; border-color:#a855f7; background:linear-gradient(135deg,#090a12,#1b0d2b 58%,#8a2be2); box-shadow:0 0 24px rgba(138,43,226,.45); }
+
   /* Static neon styling: disable moving glow and pulsing effects */
   #brand b, #brand::after, #system-clock, #theme-picker, #wrap,
   .feature-card, .clock-item strong {
@@ -562,10 +576,13 @@
       var savedTheme = localStorage.getItem("mahmoud-theme");
       if (allowedThemes.indexOf(savedTheme) !== -1) chosenTheme = savedTheme;
     } catch (e) {}
+    var logoMark = document.querySelector(".brand-mark");
+    var logoSymbols = { red:"M", blue:"◇", purple:"✦", green:"ϟ", ironman:"I", spiderman:"S", captain:"★", hulk:"H", thor:"⚡", panther:"P" };
     function applyTheme(theme) {
       if (allowedThemes.indexOf(theme) === -1) return;
       chosenTheme = theme;
       document.body.setAttribute("data-theme", theme);
+      if (logoMark) logoMark.textContent = logoSymbols[theme] || "M";
       document.querySelectorAll("[data-pick-theme]").forEach(function (button) {
         button.setAttribute("aria-pressed", button.getAttribute("data-pick-theme") === theme ? "true" : "false");
       });
