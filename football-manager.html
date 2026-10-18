@@ -11,13 +11,18 @@
 .livepitch:after{content:"";position:absolute;width:90px;height:90px;border:2px solid #ffffff70;border-radius:50%;left:calc(50% - 45px);top:calc(50% - 45px)}
 .pitchbox{position:absolute;top:0;bottom:0;width:14%;border:2px solid #ffffff70}
 .pitchbox.left{left:0;border-left:0}.pitchbox.right{right:0;border-right:0}
-.liveplayer{position:absolute;width:25px;height:25px;border-radius:50%;display:grid;place-items:center;font-size:9px;font-weight:900;color:#fff;border:2px solid white;box-shadow:0 3px 10px #0008;z-index:2;transition:left 1.5s ease,top 1.5s ease}
-.liveplayer.home{background:#f52d50}.liveplayer.away{background:#197fe7}
-.liveball{position:absolute;left:50%;top:50%;z-index:4;font-size:18px;filter:drop-shadow(0 2px 3px #000);transition:left 1s ease,top 1s ease}
+.liveplayer{position:absolute;width:25px;height:34px;border:0;border-radius:7px 7px 5px 5px;display:flex;align-items:center;justify-content:center;padding-top:8px;font-size:7px;font-weight:1000;color:#fff;text-shadow:0 1px 2px #000;z-index:2;transform:perspective(90px) rotateY(-13deg) rotateX(5deg);box-shadow:inset -5px 0 5px #0005,inset 3px 0 4px #ffffff55,0 7px 7px #0008;transition:left 1.5s ease,top 1.5s ease;isolation:isolate}
+.liveplayer:before{content:"";position:absolute;width:12px;height:12px;top:-10px;left:6px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#ffe0bc,#d9a078 55%,#70452f);border:1px solid #ffffff99;box-shadow:0 2px 3px #0008;z-index:2}
+.liveplayer:after{content:"";position:absolute;left:3px;right:3px;height:10px;bottom:-8px;border-radius:2px 2px 4px 4px;background:linear-gradient(90deg,#161923,#424956 45%,#090b10);box-shadow:0 2px 1px #0008;z-index:-1}
+.liveplayer.home{background:linear-gradient(100deg,#9e102b 0%,#ff4563 34%,#d91e40 68%,#761027 100%);border-bottom:3px solid #fff;outline:1px solid #ffffff45}
+.liveplayer.away{background:linear-gradient(100deg,#0b3e9b 0%,#45baff 34%,#1876db 68%,#07306e 100%);border-bottom:3px solid #fff;outline:1px solid #ffffff45}
+.liveplayer:nth-of-type(3n){transform:perspective(90px) rotateY(13deg) rotateX(7deg)}
+.liveball{position:absolute;left:50%;top:50%;z-index:4;font-size:18px;filter:drop-shadow(0 4px 2px #0009);transition:left 1s ease,top 1s ease;animation:ballSpin 1.2s linear infinite}
+@keyframes ballSpin{to{transform:rotate(360deg) scale(1.08)}}
 .liveclock{font-variant-numeric:tabular-nums;font-size:20px;font-weight:900}
 .commentary{max-height:175px;overflow:auto;margin-top:10px;padding:5px 10px;background:#050a11;border-radius:10px}
 .commentary .event{font-size:13px}
-@media(max-width:480px){.livepitch{height:235px}.liveplayer{width:21px;height:21px;font-size:8px}}
+@media(max-width:480px){.livepitch{height:235px}.liveplayer{width:21px;height:30px;font-size:6px}.liveplayer:before{width:10px;height:10px;left:5px;top:-8px}.liveplayer:after{bottom:-7px;height:9px}}
 </style></head><body><div class="wrap">
 <header class="top"><div class="brand"><div class="logo">⚽</div><div><h1>FOOTBALL <span style="color:var(--red)">MANAGER</span></h1><small>MAHMOUD MOHAMED • ابنِ إرثك</small></div></div><div class="resources"><div class="chip">💰 <span id="money">12,450,000</span></div><div class="chip">⚡ <span id="energy">100</span>/100</div><div class="chip">🏆 موسم 2026/27</div></div></header>
 <div class="layout"><aside class="side"><nav class="nav" id="nav"><button class="active" data-page="home">⌂ الرئيسية</button><button data-page="team">👥 الفريق</button><button data-page="tactics">🧠 التكتيك</button><button data-page="transfers">🔄 الانتقالات</button><button data-page="league">🏆 الدوري</button><button data-page="training">⚡ التدريب</button><button data-page="stats">📊 الإحصائيات</button></nav></aside><main>
