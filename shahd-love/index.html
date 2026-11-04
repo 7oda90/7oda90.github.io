@@ -214,8 +214,7 @@ onAuthStateChanged(auth, async user => {
       document.getElementById("roleShahd").classList.toggle("active", role === "shahd");
       const label = document.getElementById("identityStatus");
       if (label) label.textContent = role === "shahd" ? "دخول شهد ❤️" : "دخول محمود ❤️";
-      const label = document.getElementById("identityStatus");
-      if (label) label.textContent = role === "shahd" ? "دخول شهد ❤️" : "دخول محمود ❤️";
+
     };
     document.getElementById("roleMahmoud").addEventListener("click", () => window.setLoveRole("mahmoud"));
     document.getElementById("roleShahd").addEventListener("click", () => window.setLoveRole("shahd"));
