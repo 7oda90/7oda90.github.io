@@ -17,8 +17,7 @@
 button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 17px;cursor:pointer;transition:.2s}button:hover{transform:translateY(-2px)}button:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .primary,.music-btn{color:#351226;background:linear-gradient(120deg,#ffc1d9,#ff78ad);box-shadow:0 8px 25px #ff5d9b33}.secondary{color:#ffe4ef;background:#ffffff12;border:1px solid #ffffff25}.danger{color:#ffdce9;background:#7c244b;border:1px solid #ff9bc455}
 .section-title{font-size:22px;margin:0 0 7px;color:#ffc1d9}.section-desc{font-size:12px;color:#d6b9ca;margin:0 0 16px}
-.panel{padding:20px;margin:18px 0}.slideshow{position:relative;overflow:hidden;border-radius:18px;background:linear-gradient(135deg,#35162d,#17101e);min-height:220px;display:grid;place-items:center;border:1px solid #ff9bc433}.slideshow img{width:100%;height:330px;object-fit:cover;display:block;transition:opacity .45s}.slide-empty{text-align:center;padding:30px;color:#f4c4d9}.slide-empty strong{display:block;font-size:20px;margin-bottom:8px}.slide-caption{position:absolute;bottom:0;right:0;left:0;padding:35px 15px 12px;background:linear-gradient(transparent,#000b);font-size:13px}.slide-nav{display:flex;justify-content:center;gap:10px;margin-top:12px}.dots{color:#ffb4d1;text-align:center;font-size:12px;margin-top:7px}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}input,textarea{width:100%;font:14px Cairo,sans-serif;color:#fff;background:#100b16;border:1px solid #ffffff2b;border-radius:12px;padding:11px;outline:none}input:focus,textarea:focus{border-color:#ff8fba}textarea{min-height:88px;resize:vertical}.full{grid-column:1/-1}.entry{padding:13px;margin:10px 0;border:1px solid #ffffff18;border-radius:15px;background:#ffffff09}.entry h3{font-size:15px;color:#ffc1d9;margin:0 0 4px}.entry p{font-size:13px;line-height:1.9;margin:5px 0}.entry time{font-size:11px;color:#c9a8bb}.empty{color:#c9a8bb;text-align:center;font-size:13px;padding:12px}
+.panel{padding:20px;margin:18px 0}display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}input,textarea{width:100%;font:14px Cairo,sans-serif;color:#fff;background:#100b16;border:1px solid #ffffff2b;border-radius:12px;padding:11px;outline:none}input:focus,textarea:focus{border-color:#ff8fba}textarea{min-height:88px;resize:vertical}.full{grid-column:1/-1}.entry{padding:13px;margin:10px 0;border:1px solid #ffffff18;border-radius:15px;background:#ffffff09}.entry h3{font-size:15px;color:#ffc1d9;margin:0 0 4px}.entry p{font-size:13px;line-height:1.9;margin:5px 0}.entry time{font-size:11px;color:#c9a8bb}.empty{color:#c9a8bb;text-align:center;font-size:13px;padding:12px}
 .quote{text-align:center;font-size:18px;line-height:2;color:#ffe4ef;padding:20px;border-radius:17px;background:#ff79ad12;border:1px solid #ff9bc433;min-height:90px}
 .modal{position:fixed;inset:0;z-index:10;background:#09060deF;display:none;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.modal-box{width:min(480px,100%);padding:24px;border:1px solid #ff9bc455;border-radius:22px;background:#211323;box-shadow:0 20px 70px #000b}.modal-box h2{color:#ffc1d9;margin-top:0}.footer{text-align:center;color:#9e8295;font-size:11px;margin:22px 0}
 .floating{position:fixed;bottom:-40px;color:#ff8fba;opacity:0;pointer-events:none;animation:floatUp linear forwards;z-index:8}
@@ -30,8 +29,7 @@ button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 
 .login-card{width:min(440px,100%);padding:25px;border:1px solid #ff9bc455;border-radius:22px;background:#211323;box-shadow:0 20px 70px #000b}
 .login-card h2{color:#ffc1d9;margin:0 0 8px}.login-card p{color:#d6b9ca;font-size:13px;line-height:1.8}
 .login-card input{margin:7px 0}.login-status{min-height:22px;color:#ffc1d9;font-size:12px;margin-top:8px}
-.upload-status{color:#ffc1d9;font-size:12px;text-align:center;min-height:20px;margin-top:10px}.photo-tools{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:12px 0}.photo-tools input{display:none}
-#accountBar{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 15px;color:#e7c5d7;font-size:12px}
+display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 15px;color:#e7c5d7;font-size:12px}
 </style>
 </head>
 <body><div class="glow g1"></div><div class="glow g2"></div>
@@ -48,7 +46,7 @@ button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 
 <p>كل سنة وإنتِ حبيبتي، وضحكتي الحلوة، وأجمل صدفة في حياتي ❤️</p></div><div class="signature">من محمود ❤️</div>
 <div class="music-box"><div class="small">الأغنية اللي اخترتها لينا 🎵</div><button class="music-btn" id="musicToggle" onclick="toggleMusic()">▶ شغّلي الأغنية ❤️</button><span class="music-status" id="musicStatus">اضغطي لتشغيل الأغنية</span></div><audio id="bgMusic" src="song.mp3" loop preload="metadata"></audio>
 <div class="actions"><button class="primary" onclick="makeHearts()">دوسي هنا لو ابتسمتي ❤️</button><button class="secondary" onclick="copyMessage()">انسخي الرسالة</button></div></section>
-<section class="panel"><h2 class="section-title">صور من حكايتنا 📸</h2><p class="section-desc">اختاروا صوركم مباشرة من المعرض، وأي صورة يضيفها واحد فيكم هتظهر عند التاني.</p><div class="photo-tools"><label class="primary" for="galleryPicker" style="cursor:pointer;padding:10px 17px;border-radius:999px;font-size:14px">＋ إضافة صور من المعرض 📸</label><input id="galleryPicker" type="file" accept="image/*" multiple><span id="photoUploadStatus" class="upload-status"></span></div><div class="slideshow" id="slideshow"><div class="slide-empty"><strong>صوركم هتظهر هنا ❤️</strong>ارفعوا الصور في مجلد photos داخل الموقع</div></div><div class="slide-nav"><button class="secondary" onclick="changeSlide(-1)">❮ السابقة</button><button class="secondary" onclick="changeSlide(1)">التالية ❯</button></div><div class="dots" id="slideCount">0 / 0</div></section>
+
 <section class="panel"><h2 class="section-title">صندوق الذكريات 🗓️</h2><p class="section-desc">سجلوا المواقف الحلوة بالتاريخ عشان تفضل موجودة.</p><div class="form-grid"><input id="memoryDate" type="date" aria-label="تاريخ الذكرى"><input id="memoryTitle" placeholder="عنوان الذكرى"><textarea class="full" id="memoryText" placeholder="احكوا حصل إيه..."></textarea></div><div class="toolbar"><button class="primary" onclick="addMemory()">ضيفي ذكرى ❤️</button></div><div id="memoryList"></div></section>
 <section class="panel"><h2 class="section-title">رسالة ليكي 💌</h2><p class="section-desc">كل مرة تضغطي، هتطلعلك رسالة مختلفة من محمود.</p><div class="quote" id="randomQuote">وجودك في حياتي بيخلّي الأيام العادية أحلى ❤️</div><div class="toolbar"><button class="primary" onclick="newQuote()">اسحبي رسالة تانية</button></div></section>
 <section class="panel"><h2 class="section-title">لما توحشيني 🥺</h2><p class="section-desc">زر صغير يفكرك إن في حد بيفتكرِك.</p><div class="toolbar"><button class="primary" onclick="missYou()">وحشتيني يا شهد ❤️</button></div></section>
@@ -75,11 +73,7 @@ updateLoveCounter();setInterval(updateLoveCounter,3600000);
 const bgMusic=$('bgMusic');async function toggleMusic(){if(bgMusic.paused){try{await bgMusic.play();$('musicToggle').textContent='❚❚ إيقاف الأغنية';$('musicStatus').textContent='الأغنية شغّالة ❤️'}catch(e){$('musicStatus').textContent='ملف song.mp3 مش موجود في مجلد الموقع.'}}else{bgMusic.pause();$('musicToggle').textContent='▶ شغّلي الأغنية ❤️';$('musicStatus').textContent='الأغنية متوقفة'}}
 function makeHearts(){for(let i=0;i<20;i++){const h=document.createElement('div');h.className='floating';h.textContent=['❤','♡','💗','💕'][Math.floor(Math.random()*4)];h.style.left=Math.random()*100+'vw';h.style.fontSize=(16+Math.random()*25)+'px';h.style.animationDuration=(4+Math.random()*4)+'s';document.body.appendChild(h);setTimeout(()=>h.remove(),8500)}}
 async function copyMessage(){try{await navigator.clipboard.writeText($('letter').innerText);alert('اتنسخت الرسالة ❤️')}catch(e){alert('المتصفح منع النسخ التلقائي.')}}
-const photos=Array.from({length:12},(_,i)=>'photos/'+(i+1)+'.jpg');let photoIndex=0,availablePhotos=[],remotePhotos=[];
-function loadSlides(){let checked=0;photos.forEach(src=>{const im=new Image();im.onload=()=>{availablePhotos.push(src);availablePhotos.sort((a,b)=>Number(a.match(/(\d+)/)[1])-Number(b.match(/(\d+)/)[1]));renderSlide()};im.onerror=()=>{checked++;if(checked===photos.length&&availablePhotos.length===0)renderSlide()};im.src=src});}
-function renderSlide(){const box=$('slideshow');const slideItems=remotePhotos.length?remotePhotos.map(p=>p.url):availablePhotos;if(!slideItems.length){box.innerHTML='<div class="slide-empty"><strong>صوركم هتظهر هنا ❤️</strong>ارفعوا الصور داخل photos باسم 1.jpg و2.jpg وهكذا</div>';$('slideCount').textContent='0 / 0';return}photoIndex=(photoIndex+slideItems.length)%slideItems.length;box.innerHTML='';const im=document.createElement('img');im.src=slideItems[photoIndex];im.alt='ذكرى جميلة لمحمود وشهد';box.appendChild(im);const cap=document.createElement('div');cap.className='slide-caption';cap.textContent='ذكرى من حكايتنا ❤️';box.appendChild(cap);$('slideCount').textContent=(photoIndex+1)+' / '+slideItems.length}
-function changeSlide(n){const count=remotePhotos.length?remotePhotos.length:availablePhotos.length;if(!count)return;photoIndex=(photoIndex+n+count)%count;renderSlide()}loadSlides();setInterval(()=>changeSlide(1),4000);
-const read=(k,fallback=[])=>{try{return JSON.parse(localStorage.getItem(k))||fallback}catch(e){return fallback}},save=(k,v)=>{localStorage.setItem(k,JSON.stringify(v));if(window.__firebaseWrite)window.__firebaseWrite()};
+=>{try{return JSON.parse(localStorage.getItem(k))||fallback}catch(e){return fallback}},save=(k,v)=>{localStorage.setItem(k,JSON.stringify(v));if(window.__firebaseWrite)window.__firebaseWrite()};
 function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function renderEntries(key,target,kind){const arr=read(key);const el=$(target);if(!arr.length){el.innerHTML='<div class="empty">لسه مفيش إضافات. ابدأوا أول ذكرى ❤️</div>';return}el.innerHTML=arr.slice().reverse().map((x,i)=>'<article class="entry"><h3>'+safe(x.title||x.author||x.text)+'</h3><time>'+safe(x.date||'')+'</time>'+(x.body?'<p>'+safe(x.body)+'</p>':'')+'<div class="toolbar"><button class="secondary" onclick="removeEntry(\''+key+'\','+(arr.length-1-i)+')">حذف</button></div></article>').join('')}
 function removeEntry(key,i){const a=read(key);a.splice(i,1);save(key,a);refreshLists()}
@@ -203,41 +197,6 @@ onAuthStateChanged(auth, async user => {
   }
 });
 
-const galleryPicker = document.getElementById("galleryPicker");
-galleryPicker.addEventListener("change", async event => {
-  const files = Array.from(event.target.files || []);
-  if (!files.length) return;
-  const label = document.getElementById("photoUploadStatus");
-  const button = document.querySelector('label[for="galleryPicker"]');
-  if (!auth.currentUser) { label.textContent = "سجّل الدخول الأول."; return; }
-  const allowed = files.filter(f => f.type.startsWith("image/") && f.size <= 8 * 1024 * 1024);
-  if (allowed.length !== files.length) {
-    label.textContent = "اختاروا صور فقط، وحجم كل صورة أقل من 8 ميجابايت.";
-    if (!allowed.length) { event.target.value = ""; return; }
-  }
-  button.style.opacity = ".5";
-  button.style.pointerEvents = "none";
-  try {
-    for (let i = 0; i < allowed.length; i++) {
-      const file = allowed[i];
-      label.textContent = "جاري رفع الصورة " + (i+1) + " من " + allowed.length + "...";
-      const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(-70) || "photo.jpg";
-      const path = "couples/mahmoud-shahd-95c54/photos/" + Date.now() + "_" + i + "_" + cleanName;
-      const fileRef = storageRef(storage, path);
-      await uploadBytes(fileRef, file, { contentType: file.type });
-      const url = await getDownloadURL(fileRef);
-      await updateDoc(sharedRef, { photos: arrayUnion({ url, path, name: file.name, uploadedAt: Date.now() }) });
-    }
-    label.textContent = "اترفعت الصور وظهرت عندكم ❤️";
-  } catch (e) {
-    label.textContent = "فشل رفع الصور: " + friendlyError(e);
-  } finally {
-    button.style.opacity = "1";
-    button.style.pointerEvents = "auto";
-    event.target.value = "";
-  }
-});
 
-window.__shahdLogout = async () => { await signOut(auth); };
 </script>
 </body></html>
