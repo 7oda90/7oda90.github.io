@@ -152,6 +152,32 @@ window.__shahdLogout = async () => {
 const auth = getAuth(app);
 const db = getFirestore(app);
 const sharedRef = doc(db, "couples", "mahmoud-shahd-95c54", "shared", "main");
+const missYouDeviceKey = "shahd_device_id";
+let missYouDeviceId = localStorage.getItem(missYouDeviceKey);
+if (!missYouDeviceId) {
+  missYouDeviceId = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random());
+  localStorage.setItem(missYouDeviceKey, missYouDeviceId);
+}
+// جهّز وظيفة الإرسال فور تحميل Firebase، حتى لو تأخر تحميل بيانات المستند المشترك.
+window.__sendMissYou = async () => {
+  if (!auth.currentUser) { alert("سجّل الدخول الأول."); return; }
+  const role = localStorage.getItem("shahd_love_role");
+  if (role !== "mahmoud" && role !== "shahd") { alert("اختار هويتك الأول من الشريط اللي فوق."); return; }
+  const id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random());
+  const createdAt = Date.now();
+  const message = role === "shahd" ? "شهد بتقولك: وحشتني يا محمود ❤️" : "محمود بيقولك: وحشتيني يا شهد ❤️";
+  const logEntry = { id, senderRole: role, senderName: role === "shahd" ? "شهد" : "محمود", text: message, createdAt };
+  try {
+    await setDoc(sharedRef, {
+      missYouNotification: { id, senderDevice: missYouDeviceId, senderRole: role, createdAt, text: message },
+      loveButtonLog: arrayUnion(logEntry)
+    }, { merge: true });
+  } catch (e) {
+    console.error("Miss-you log save failed:", e);
+    alert("تعذر إرسال الضغطة لشهد. السبب: " + friendlyError(e));
+  }
+};
+
 const wall = document.getElementById("loginWall");
 const status = document.getElementById("loginStatus");
 const password = document.getElementById("firebasePassword");
