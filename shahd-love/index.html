@@ -49,7 +49,7 @@ button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 
 
 <section class="panel"><h2 class="section-title">صندوق الذكريات 🗓️</h2><p class="section-desc">سجلوا المواقف الحلوة بالتاريخ عشان تفضل موجودة.</p><div class="form-grid"><input id="memoryDate" type="date" aria-label="تاريخ الذكرى"><input id="memoryTitle" placeholder="عنوان الذكرى"><textarea class="full" id="memoryText" placeholder="احكوا حصل إيه..."></textarea></div><div class="toolbar"><button class="primary" data-mahmoud="ضيف ذكرى ❤️" data-shahd="ضيفي ذكرى ❤️" onclick="addMemory()">ضيفي ذكرى ❤️</button></div><div id="memoryList"></div></section>
 <section class="panel"><h2 class="section-title">رسالة ليكي 💌</h2><p class="section-desc">كل مرة تضغطي، هتطلعلك رسالة مختلفة من محمود.</p><div class="quote" id="randomQuote">وجودك في حياتي بيخلّي الأيام العادية أحلى ❤️</div><div class="toolbar"><button class="primary" data-mahmoud="اسحب رسالة تانية" data-shahd="اسحبي رسالة تانية" onclick="newQuote()">اسحبي رسالة تانية</button></div></section>
-<section class="panel"><h2 class="section-title">لما توحشيني 🥺</h2><p class="section-desc">زر صغير يفكرك إن في حد بيفتكرِك.</p><div class="toolbar"><button class="primary" id="loveButton" data-mahmoud="وحشتيني يا شهد ❤️" data-shahd="وحشتني يا محمود ❤️" onclick="missYou()">وحشتيني يا شهد ❤️</button></div></section>
+<section class="panel"><h2 class="section-title">لما توحشيني 🥺</h2><p class="section-desc">زر صغير يفكرك إن في حد بيفتكرِك.</p><div class="toolbar"><button class="primary" id="loveButton" data-mahmoud="وحشتيني يا شهد ❤️" data-shahd="وحشتني يا محمود ❤️" onclick="missYou()">وحشتيني يا شهد ❤️</button></div><div class="small" style="margin-top:14px;text-align:right">سجل مين ضغط على الزر ❤️</div><div id="loveLog" class="entries"><div class="empty">لسه محدش ضغط على الزر.</div></div></section>
 <section class="panel"><h2 class="section-title">مفكرتنا سوا 📖</h2><p class="section-desc">اكتبوا يومياتكم. الحفظ هنا على نفس الجهاز والمتصفح فقط حاليًا.</p><div class="form-grid"><input id="diaryAuthor" placeholder="مين بيكتب؟ محمود / شهد"><textarea class="full" id="diaryText" placeholder="اكتبوا اللي في بالكم..."></textarea></div><div class="toolbar"><button class="primary" data-mahmoud="احفظ اليوم" data-shahd="احفظي اليوم" onclick="addDiary()">احفظوا اليوم</button><button class="secondary" onclick="exportDiary()">تصدير نسخة احتياطية</button><label class="secondary" style="cursor:pointer;padding:10px 16px;border-radius:999px;font-size:13px">استيراد نسخة<input id="importDiary" type="file" accept="application/json" hidden onchange="importDiaryFile(event)"></label></div><div id="diaryList"></div></section>
 <section class="panel"><h2 class="section-title">أمنيات المستقبل ✨</h2><p class="section-desc">حاجات نفسكم تحققوها مع بعض، وعلموا عليها لما تحصل.</p><div class="form-grid"><input class="full" id="wishText" placeholder="مثلاً: نروح مكان جديد سوا"><input id="wishDate" type="date" aria-label="موعد مستهدف اختياري"></div><div class="toolbar"><button class="primary" data-mahmoud="ضيف أمنية" data-shahd="ضيفي أمنية" onclick="addWish()">ضيفوا أمنية</button></div><div id="wishList"></div></section>
 <section class="panel" style="text-align:center"><h2 class="section-title">في حاجة مستخبية ليكي 🔐</h2><p class="section-desc">صفحة صغيرة بكلمة سر بينكم.</p><button class="primary" data-mahmoud="افتح المفاجأة" data-shahd="افتحي المفاجأة" onclick="openSecret()">افتحي المفاجأة</button></section>
@@ -199,7 +199,7 @@ onAuthStateChanged(auth, async user => {
   status.textContent = "تم تسجيل الدخول.";
   try {
     const snap = await getDoc(sharedRef);
-    if (snap.exists()) applyRemote(snap.data());
+    if (snap.exists()) { applyRemote(snap.data()); renderLoveLog(snap.data().loveButtonLog || []); }
     else await setDoc(sharedRef, localData());
     let firstNotificationSnapshot = true;
     const deviceKey = "shahd_device_id";
@@ -210,6 +210,7 @@ onAuthStateChanged(auth, async user => {
       if (snap2.exists()) {
         const data = snap2.data();
         applyRemote(data);
+        renderLoveLog(data.loveButtonLog || []);
         const notice = data.missYouNotification;
         if (firstNotificationSnapshot) {
           lastNotificationId = notice?.id || null;
@@ -232,15 +233,29 @@ onAuthStateChanged(auth, async user => {
     };
     document.getElementById("roleMahmoud").addEventListener("click", () => window.setLoveRole("mahmoud"));
     document.getElementById("roleShahd").addEventListener("click", () => window.setLoveRole("shahd"));
+    function renderLoveLog(entries) {
+      const target = document.getElementById("loveLog");
+      if (!target) return;
+      const list = Array.isArray(entries) ? [...entries].sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0)) : [];
+      target.innerHTML = list.length ? list.map(item => {
+        const when = item.createdAt ? new Date(item.createdAt).toLocaleString("ar-EG") : "";
+        return '<article class="entry"><b>' + (item.senderRole === "shahd" ? "شهد" : "محمود") + '</b><div>' + (item.senderRole === "shahd" ? "وحشتني يا محمود ❤️" : "وحشتيني يا شهد ❤️") + '</div><time>' + when + '</time></article>';
+      }).join("") : '<div class="empty">لسه محدش ضغط على الزر.</div>';
+    }
     window.__sendMissYou = async () => {
       if (!auth.currentUser) { alert("سجّل الدخول الأول."); return; }
       const role = localStorage.getItem("shahd_love_role");
       if (!role) { alert("اختار هويتك الأول من الشريط اللي فوق."); return; }
       const id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random());
+      const createdAt = Date.now();
       const message = role === "shahd" ? "شهد بتقولك: وحشتني يا محمود ❤️" : "محمود بيقولك: وحشتيني يا شهد ❤️";
+      const logEntry = { id, senderRole: role, senderName: role === "shahd" ? "شهد" : "محمود", text: message, createdAt };
       try {
-        await updateDoc(sharedRef, { missYouNotification: { id, senderDevice: deviceId, senderRole: role, createdAt: Date.now(), text: message } });
-      } catch (e) { alert("الإشعار ماوصلش. راجع اتصال الإنترنت وحاول تاني."); }
+        await updateDoc(sharedRef, {
+          missYouNotification: { id, senderDevice: deviceId, senderRole: role, createdAt, text: message },
+          loveButtonLog: arrayUnion(logEntry)
+        });
+      } catch (e) { alert("ماقدرناش نسجل الضغطة. راجع اتصال الإنترنت وحاول تاني."); }
     };
     const savedRole = localStorage.getItem("shahd_love_role");
     if (savedRole) window.setLoveRole(savedRole);
