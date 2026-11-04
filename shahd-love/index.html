@@ -16,6 +16,7 @@
     .top { text-align:center; margin-bottom:18px; animation:fade .9s ease both; }
     .eyebrow { color:#ffb4d1; font-size:13px; letter-spacing:2px; }
     h1 { margin:8px 0 0; font-size:clamp(30px,7vw,48px); line-height:1.4; } h1 span { color:var(--pink); text-shadow:0 0 25px #ff79ad66; }
+    .counter { margin:0 auto 18px; padding:18px 16px; text-align:center; border:1px solid #ff9bc455; border-radius:22px; background:linear-gradient(135deg,#ff79ad1c,#a94fff12); box-shadow:0 12px 35px #0005; animation:rise .9s .08s ease both; } .counter-title { color:#ffc0d9; font-size:14px; margin-bottom:12px; } .counter-grid { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; } .counter-unit { min-width:88px; padding:10px 14px; border-radius:15px; background:#ffffff0d; border:1px solid #ffffff18; } .counter-number { display:block; color:#ff9bc4; font-size:clamp(25px,6vw,34px); font-weight:800; line-height:1.3; font-variant-numeric:tabular-nums; } .counter-label { color:#f5d8e6; font-size:12px; } .counter-total { margin-top:12px; color:#e7c5d7; font-size:12px; }
     .card { position:relative; padding:clamp(24px,6vw,48px); border:1px solid #ffffff20; border-radius:28px; background:linear-gradient(145deg,#ffffff12,#ffffff06); box-shadow:0 25px 80px #0008,inset 0 1px #ffffff18; backdrop-filter:blur(14px); overflow:hidden; animation:rise 1s .15s ease both; }
     .card:before { content:""; position:absolute; inset:0; border-radius:28px; padding:1px; background:linear-gradient(135deg,#ff9bc4aa,transparent 40%,#b77bff66); -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; }
     .heart { text-align:center; font-size:34px; margin-bottom:12px; animation:pulse 1.8s infinite; }
@@ -36,6 +37,7 @@
   <div class="glow g1"></div><div class="glow g2"></div>
   <main class="wrap">
     <header class="top"><div class="eyebrow">رسالة صغيرة من قلبي لقلبك</div><h1>إلى <span>شهودتي</span> ❤️</h1></header>
+    <section class="counter" aria-label="عداد مدة التعارف"><div class="counter-title">بقالنا قد إيه مع بعض؟ ❤️</div><div class="counter-grid"><div class="counter-unit"><span class="counter-number" id="monthsCount">—</span><span class="counter-label">شهر</span></div><div class="counter-unit"><span class="counter-number" id="daysCount">—</span><span class="counter-label">يوم</span></div></div><div class="counter-total" id="totalDays">من يوم 22 يوليو 2026 ❤️</div></section>
     <section class="card">
       <div class="heart">❤️</div>
       <div class="message" id="letter">
@@ -54,6 +56,8 @@
     <div class="hint">كل قلب هنا بيقولك إنك غالية ❤️</div><div class="footer">صُنعت بحب خصيصًا لشهد</div>
   </main>
   <script>
+    function updateLoveCounter(){ const start=new Date(2026,6,22); const now=new Date(); const today=new Date(now.getFullYear(),now.getMonth(),now.getDate()); if(today<start){ document.getElementById("monthsCount").textContent="0"; document.getElementById("daysCount").textContent="0"; document.getElementById("totalDays").textContent="العداد هيبدأ يوم 22 يوليو 2026 ❤️"; return; } let months=(today.getFullYear()-start.getFullYear())*12+(today.getMonth()-start.getMonth()); let anchor=new Date(start.getFullYear(),start.getMonth()+months,start.getDate()); if(anchor>today){ months--; anchor=new Date(start.getFullYear(),start.getMonth()+months,start.getDate()); } const days=Math.floor((today-anchor)/86400000); const total=Math.floor((today-start)/86400000); document.getElementById("monthsCount").textContent=months; document.getElementById("daysCount").textContent=days; document.getElementById("totalDays").textContent=`${total} يوم من الذكريات الحلوة ❤️`; }
+    updateLoveCounter(); setInterval(updateLoveCounter,60*60*1000);
     const bgMusic=document.getElementById("bgMusic");
     async function toggleMusic(){ const btn=document.getElementById("musicToggle"); const status=document.getElementById("musicStatus"); if(bgMusic.paused){ try{ await bgMusic.play(); btn.textContent="❚❚ إيقاف الأغنية"; status.textContent="الأغنية شغّالة ❤️"; }catch(e){ status.textContent="ملف song.mp3 لسه مش موجود في مجلد الموقع."; } }else{ bgMusic.pause(); btn.textContent="▶ شغّلي الأغنية ❤️"; status.textContent="الأغنية متوقفة"; } }
     bgMusic.addEventListener("ended",()=>{document.getElementById("musicToggle").textContent="▶ شغّلي الأغنية ❤️";});
