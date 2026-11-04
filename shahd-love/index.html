@@ -252,15 +252,27 @@ onAuthStateChanged(auth, async user => {
     };
     document.getElementById("roleMahmoud").addEventListener("click", () => window.setLoveRole("mahmoud"));
     document.getElementById("roleShahd").addEventListener("click", () => window.setLoveRole("shahd"));
+    let currentLoveLog = [];
+    function timeAgo(timestamp) {
+      const seconds = Math.max(0, Math.floor((Date.now() - Number(timestamp || Date.now())) / 1000));
+      if (seconds < 60) return "منذ لحظات";
+      if (seconds < 3600) return "منذ " + Math.floor(seconds / 60) + " دقيقة";
+      if (seconds < 86400) return "منذ " + Math.floor(seconds / 3600) + " ساعة";
+      if (seconds < 2592000) return "منذ " + Math.floor(seconds / 86400) + " يوم";
+      if (seconds < 31536000) return "منذ " + Math.floor(seconds / 2592000) + " شهر";
+      return "منذ " + Math.floor(seconds / 31536000) + " سنة";
+    }
     function renderLoveLog(entries) {
       const target = document.getElementById("loveLog");
       if (!target) return;
-      const list = Array.isArray(entries) ? [...entries].sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0)) : [];
-      target.innerHTML = list.length ? list.map(item => {
+      currentLoveLog = Array.isArray(entries) ? [...entries].sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0)) : [];
+      target.innerHTML = currentLoveLog.length ? currentLoveLog.map(item => {
         const when = item.createdAt ? new Date(item.createdAt).toLocaleString("ar-EG") : "";
-        return '<article class="entry"><b>' + (item.senderRole === "shahd" ? "شهد" : "محمود") + '</b><div>' + (item.senderRole === "shahd" ? "وحشتني يا محمود ❤️" : "وحشتيني يا شهد ❤️") + '</div><time>' + when + '</time></article>';
+        const ago = timeAgo(item.createdAt);
+        return '<article class="entry"><b>' + (item.senderRole === "shahd" ? "شهد" : "محمود") + '</b><div>' + (item.senderRole === "shahd" ? "وحشتني يا محمود ❤️" : "وحشتيني يا شهد ❤️") + '</div><time title="' + when + '">' + ago + ' · ' + when + '</time></article>';
       }).join("") : '<div class="empty">لسه محدش ضغط على الزر.</div>';
     }
+    setInterval(() => renderLoveLog(currentLoveLog), 60000);
     window.__sendMissYou = async () => {
       if (!auth.currentUser) { alert("سجّل الدخول الأول."); return; }
       const role = localStorage.getItem("shahd_love_role");
@@ -270,11 +282,16 @@ onAuthStateChanged(auth, async user => {
       const message = role === "shahd" ? "شهد بتقولك: وحشتني يا محمود ❤️" : "محمود بيقولك: وحشتيني يا شهد ❤️";
       const logEntry = { id, senderRole: role, senderName: role === "shahd" ? "شهد" : "محمود", text: message, createdAt };
       try {
-        await updateDoc(sharedRef, {
+        // اعرض الضغطة فورًا، ثم احفظها في المستند المشترك حتى تظهر على الجهازين.
+        renderLoveLog([logEntry, ...currentLoveLog.filter(item => item.id !== id)]);
+        await setDoc(sharedRef, {
           missYouNotification: { id, senderDevice: deviceId, senderRole: role, createdAt, text: message },
           loveButtonLog: arrayUnion(logEntry)
-        });
-      } catch (e) { alert("ماقدرناش نسجل الضغطة. راجع اتصال الإنترنت وحاول تاني."); }
+        }, { merge: true });
+      } catch (e) {
+        console.error("Miss-you log save failed:", e);
+        alert("الضغطة ظهرت عندك، لكن تعذر حفظها للطرف التاني. السبب: " + friendlyError(e));
+      }
     };
     const savedRole = localStorage.getItem("shahd_love_role");
     if (savedRole) window.setLoveRole(savedRole);
