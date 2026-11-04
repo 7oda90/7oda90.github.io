@@ -62,7 +62,7 @@ button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 
   <div class="toolbar"><button class="secondary active" id="authMahmoud" type="button">محمود</button><button class="secondary" id="authShahd" type="button">شهد</button></div>
   <label class="small">الإيميل</label><input id="firebaseEmail" type="email" value="mahmoud@gmail.com" readonly>
   <label class="small">كلمة المرور</label><input id="firebasePassword" type="password" autocomplete="current-password" placeholder="اكتب كلمة المرور">
-  <div class="toolbar"><button class="primary" id="loginBtn">تسجيل الدخول</button><button class="secondary" id="signupBtn">إنشاء الحساب أول مرة</button></div>
+  <div class="toolbar"><button class="primary" id="loginBtn">تسجيل الدخول</button><button class="secondary" id="signupBtn">إنشاء الحساب أول مرة</button></div><div class="toolbar"><button class="secondary" id="resetPasswordBtn" type="button">نسيت كلمة المرور؟ ابعتلي رابط استعادة</button></div>
   <div class="login-status" id="loginStatus">لو دي أول مرة، اختار «إنشاء الحساب أول مرة».</div>
  </div>
 </div>
@@ -95,7 +95,7 @@ $('secretPass').addEventListener('keydown',e=>{if(e.key==='Enter')checkSecret()}
 </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, onSnapshot, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -187,6 +187,16 @@ async function enter(mode){
 }
 document.getElementById("loginBtn").addEventListener("click",()=>enter("login"));
 document.getElementById("signupBtn").addEventListener("click",()=>enter("signup"));
+document.getElementById("resetPasswordBtn").addEventListener("click", async () => {
+  const email = emailForRole(authRole);
+  status.textContent = "جاري إرسال رابط استعادة كلمة المرور إلى " + email + "...";
+  try {
+    await sendPasswordResetEmail(auth, email);
+    status.textContent = "تم إرسال رابط الاستعادة إلى " + email + ". راجع الوارد والرسائل غير المرغوب فيها.";
+  } catch (e) {
+    status.textContent = friendlyError(e);
+  }
+});
 password.addEventListener("keydown",e=>{if(e.key==="Enter")enter("login")});
 
 onAuthStateChanged(auth, async user => {
