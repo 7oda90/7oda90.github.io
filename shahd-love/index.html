@@ -17,7 +17,7 @@
 button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 17px;cursor:pointer;transition:.2s}button:hover{transform:translateY(-2px)}button:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .primary,.music-btn{color:#351226;background:linear-gradient(120deg,#ffc1d9,#ff78ad);box-shadow:0 8px 25px #ff5d9b33}.secondary{color:#ffe4ef;background:#ffffff12;border:1px solid #ffffff25}.danger{color:#ffdce9;background:#7c244b;border:1px solid #ff9bc455}
 .section-title{font-size:22px;margin:0 0 7px;color:#ffc1d9}.section-desc{font-size:12px;color:#d6b9ca;margin:0 0 16px}
-.panel{padding:20px;margin:18px 0}display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}input,textarea{width:100%;font:14px Cairo,sans-serif;color:#fff;background:#100b16;border:1px solid #ffffff2b;border-radius:12px;padding:11px;outline:none}input:focus,textarea:focus{border-color:#ff8fba}textarea{min-height:88px;resize:vertical}.full{grid-column:1/-1}.entry{padding:13px;margin:10px 0;border:1px solid #ffffff18;border-radius:15px;background:#ffffff09}.entry h3{font-size:15px;color:#ffc1d9;margin:0 0 4px}.entry p{font-size:13px;line-height:1.9;margin:5px 0}.entry time{font-size:11px;color:#c9a8bb}.empty{color:#c9a8bb;text-align:center;font-size:13px;padding:12px}
+.panel{padding:20px;margin:18px 0}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}input,textarea{width:100%;font:14px Cairo,sans-serif;color:#fff;background:#100b16;border:1px solid #ffffff2b;border-radius:12px;padding:11px;outline:none}input:focus,textarea:focus{border-color:#ff8fba}textarea{min-height:88px;resize:vertical}.full{grid-column:1/-1}.entry{padding:13px;margin:10px 0;border:1px solid #ffffff18;border-radius:15px;background:#ffffff09}.entry h3{font-size:15px;color:#ffc1d9;margin:0 0 4px}.entry p{font-size:13px;line-height:1.9;margin:5px 0}.entry time{font-size:11px;color:#c9a8bb}.empty{color:#c9a8bb;text-align:center;font-size:13px;padding:12px}
 .quote{text-align:center;font-size:18px;line-height:2;color:#ffe4ef;padding:20px;border-radius:17px;background:#ff79ad12;border:1px solid #ff9bc433;min-height:90px}
 .modal{position:fixed;inset:0;z-index:10;background:#09060deF;display:none;align-items:center;justify-content:center;padding:18px}.modal.show{display:flex}.modal-box{width:min(480px,100%);padding:24px;border:1px solid #ff9bc455;border-radius:22px;background:#211323;box-shadow:0 20px 70px #000b}.modal-box h2{color:#ffc1d9;margin-top:0}.footer{text-align:center;color:#9e8295;font-size:11px;margin:22px 0}
 .floating{position:fixed;bottom:-40px;color:#ff8fba;opacity:0;pointer-events:none;animation:floatUp linear forwards;z-index:8}
@@ -29,12 +29,12 @@ button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 
 .login-card{width:min(440px,100%);padding:25px;border:1px solid #ff9bc455;border-radius:22px;background:#211323;box-shadow:0 20px 70px #000b}
 .login-card h2{color:#ffc1d9;margin:0 0 8px}.login-card p{color:#d6b9ca;font-size:13px;line-height:1.8}
 .login-card input{margin:7px 0}.login-status{min-height:22px;color:#ffc1d9;font-size:12px;margin-top:8px}
-display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 15px;color:#e7c5d7;font-size:12px}
+#accountBar{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 15px;color:#e7c5d7;font-size:12px}
 </style>
 </head>
 <body><div class="glow g1"></div><div class="glow g2"></div>
 <main class="wrap">
-<div id="accountBar" hidden><span>متصل بالحساب: <b>m01143636883@gmail.com</b> · المزامنة شغالة ❤️</span><button class="secondary" onclick="window.__shahdLogout && window.__shahdLogout()">تسجيل خروج</button></div>
+<div id="accountBar" hidden><span>متصل بالحساب: <b>m01143636883@gmail.com</b> · المزامنة شغالة ❤️</span><button class="secondary" onclick="window.enableLoveNotifications && window.enableLoveNotifications()">تفعيل إشعارات الجهاز 🔔</button><button class="secondary" onclick="window.__shahdLogout && window.__shahdLogout()">تسجيل خروج</button></div>
 <header class="top"><div class="eyebrow">حكايتنا لسه بتتكتب... ❤️</div><h1>محمود <span>&</span> شهد</h1><div class="small">مساحة صغيرة لكل حاجة حلوة بينا</div></header>
 <section class="counter"><div class="counter-title">بقالنا قد إيه من أول يوم؟ ❤️</div><div class="counter-grid"><div class="unit"><span class="num" id="monthsCount">—</span><span class="small">شهر</span></div><div class="unit"><span class="num" id="daysCount">—</span><span class="small">يوم</span></div></div><div class="small" id="totalDays">من يوم 22 يوليو 2026 ❤️</div></section>
 <section class="card"><div class="heart">❤️</div><div class="message" id="letter">
@@ -65,6 +65,7 @@ display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;m
   <div class="login-status" id="loginStatus">لو دي أول مرة، اختار «إنشاء الحساب أول مرة».</div>
  </div>
 </div>
+<div id="loveToast" role="status" aria-live="polite" style="display:none;position:fixed;z-index:40;top:18px;left:14px;right:14px;max-width:480px;margin:auto;padding:17px 20px;text-align:center;border:1px solid #ff9bc4;border-radius:18px;background:#30172b;color:#fff0f6;box-shadow:0 12px 45px #0009;font-weight:700">💌 محمود بيقولك: وحشتيني يا شهد ❤️</div>
 <div class="modal" id="secretModal" role="dialog" aria-modal="true"><div class="modal-box"><h2>المكان السري ❤️</h2><div id="secretGate"><p class="small">اكتبي كلمة السر عشان تفتحي الرسالة.</p><input id="secretPass" type="password" placeholder="كلمة السر"><div class="toolbar"><button class="primary" onclick="checkSecret()">افتحي</button><button class="secondary" onclick="closeSecret()">إغلاق</button></div><p class="note" id="secretError"></p></div><div id="secretContent" hidden><p class="message">يا شهد، أتمنى نفضل دايمًا سند لبعض، ونكبر ونحقق أحلامنا واحدة واحدة. وجودك في حكايتي حاجة غالية عندي، ونفسي اللي جاي يكون مليان أيام حلوة لينا. بحبك ❤️</p><button class="secondary" onclick="closeSecret()">اقفلي المفاجأة</button></div></div></div>
 <script>
 const $=id=>document.getElementById(id);
@@ -73,7 +74,7 @@ updateLoveCounter();setInterval(updateLoveCounter,3600000);
 const bgMusic=$('bgMusic');async function toggleMusic(){if(bgMusic.paused){try{await bgMusic.play();$('musicToggle').textContent='❚❚ إيقاف الأغنية';$('musicStatus').textContent='الأغنية شغّالة ❤️'}catch(e){$('musicStatus').textContent='ملف song.mp3 مش موجود في مجلد الموقع.'}}else{bgMusic.pause();$('musicToggle').textContent='▶ شغّلي الأغنية ❤️';$('musicStatus').textContent='الأغنية متوقفة'}}
 function makeHearts(){for(let i=0;i<20;i++){const h=document.createElement('div');h.className='floating';h.textContent=['❤','♡','💗','💕'][Math.floor(Math.random()*4)];h.style.left=Math.random()*100+'vw';h.style.fontSize=(16+Math.random()*25)+'px';h.style.animationDuration=(4+Math.random()*4)+'s';document.body.appendChild(h);setTimeout(()=>h.remove(),8500)}}
 async function copyMessage(){try{await navigator.clipboard.writeText($('letter').innerText);alert('اتنسخت الرسالة ❤️')}catch(e){alert('المتصفح منع النسخ التلقائي.')}}
-=>{try{return JSON.parse(localStorage.getItem(k))||fallback}catch(e){return fallback}},save=(k,v)=>{localStorage.setItem(k,JSON.stringify(v));if(window.__firebaseWrite)window.__firebaseWrite()};
+const read=(k,fallback=[])=>{try{return JSON.parse(localStorage.getItem(k))||fallback}catch(e){return fallback}},save=(k,v)=>{localStorage.setItem(k,JSON.stringify(v));if(window.__firebaseWrite)window.__firebaseWrite()};
 function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function renderEntries(key,target,kind){const arr=read(key);const el=$(target);if(!arr.length){el.innerHTML='<div class="empty">لسه مفيش إضافات. ابدأوا أول ذكرى ❤️</div>';return}el.innerHTML=arr.slice().reverse().map((x,i)=>'<article class="entry"><h3>'+safe(x.title||x.author||x.text)+'</h3><time>'+safe(x.date||'')+'</time>'+(x.body?'<p>'+safe(x.body)+'</p>':'')+'<div class="toolbar"><button class="secondary" onclick="removeEntry(\''+key+'\','+(arr.length-1-i)+')">حذف</button></div></article>').join('')}
 function removeEntry(key,i){const a=read(key);a.splice(i,1);save(key,a);refreshLists()}
@@ -82,7 +83,7 @@ function addMemory(){const title=$('memoryTitle').value.trim(),body=$('memoryTex
 function addDiary(){const author=$('diaryAuthor').value.trim(),body=$('diaryText').value.trim();if(!author||!body){alert('اكتب اسم اللي بيكتب واليومية.');return}const a=read('shahd_diary');a.push({author,body,date:new Date().toLocaleString('ar-EG')});save('shahd_diary',a);$('diaryText').value='';refreshLists()}
 function exportDiary(){const data={memories:read('shahd_memories'),diary:read('shahd_diary'),wishes:read('shahd_wishes')};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='mahmoud-shahd-backup.json';a.click();URL.revokeObjectURL(url)}
 function importDiaryFile(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.memories)save('shahd_memories',d.memories);if(d.diary)save('shahd_diary',d.diary);if(d.wishes)save('shahd_wishes',d.wishes);refreshLists();alert('تم استيراد النسخة الاحتياطية.')}catch(err){alert('الملف غير صالح.')}};r.readAsText(file);e.target.value=''}
-const quotes=['وجودك في حياتي بيخلّي الأيام العادية أحلى ❤️','أنا مش محتاج يوم مميز عشان أفرح، كفاية إنك موجودة.','كل مرة بفتكرك فيها بلاقي نفسي ببتسم من غير ما أحس.','نفسي أفضل سبب صغير في ضحكتك.','إنتِ مش مجرد ذكرى حلوة، إنتِ جزء من كل اللي جاي.','ربنا يكتب لنا الخير ويجمعنا دايمًا على خير ❤️'];function newQuote(){let q=quotes[Math.floor(Math.random()*quotes.length)];$('randomQuote').textContent=q}function missYou(){newQuote();$('randomQuote').textContent='وحشتيني يا شهد... محمود بيفتكرِك دلوقتي وبيبعتلك قلب كبير ❤️';makeHearts()}
+const quotes=['وجودك في حياتي بيخلّي الأيام العادية أحلى ❤️','أنا مش محتاج يوم مميز عشان أفرح، كفاية إنك موجودة.','كل مرة بفتكرك فيها بلاقي نفسي ببتسم من غير ما أحس.','نفسي أفضل سبب صغير في ضحكتك.','إنتِ مش مجرد ذكرى حلوة، إنتِ جزء من كل اللي جاي.','ربنا يكتب لنا الخير ويجمعنا دايمًا على خير ❤️'];function newQuote(){let q=quotes[Math.floor(Math.random()*quotes.length)];$('randomQuote').textContent=q}function missYou(){newQuote();$('randomQuote').textContent='وحشتيني يا شهد... محمود بيفتكرِك دلوقتي وبيبعتلك قلب كبير ❤️';makeHearts();if(window.__sendMissYou)window.__sendMissYou()}
 function addWish(){const text=$('wishText').value.trim(),date=$('wishDate').value;if(!text){alert('اكتبوا الأمنية الأول.');return}const a=read('shahd_wishes');a.push({text,date,done:false});save('shahd_wishes',a);$('wishText').value='';renderWishes()}
 function renderWishes(){const a=read('shahd_wishes');$('wishList').innerHTML=a.length?a.map((w,i)=>'<article class="entry"><label style="display:flex;gap:9px;align-items:center"><input type="checkbox" style="width:auto" '+(w.done?'checked':'')+' onchange="toggleWish('+i+',this.checked)"><span style="'+(w.done?'text-decoration:line-through;opacity:.6':'')+'">'+safe(w.text)+'</span></label><time>'+safe(w.date||'من غير موعد محدد')+'</time><div class="toolbar"><button class="secondary" onclick="removeWish('+i+')">حذف</button></div></article>').join(''):'<div class="empty">اكتبوا أول أمنية ليكم ✨</div>'}
 function toggleWish(i,v){const a=read('shahd_wishes');a[i].done=v;save('shahd_wishes',a);renderWishes()}function removeWish(i){const a=read('shahd_wishes');a.splice(i,1);save('shahd_wishes',a);renderWishes()}
@@ -95,7 +96,6 @@ $('secretPass').addEventListener('keydown',e=>{if(e.key==='Enter')checkSecret()}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, onSnapshot, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBLN5RfLQTHznQ9d-Bu2kSi1b-xmmChuyw",
@@ -110,7 +110,6 @@ const allowedEmail = "m01143636883@gmail.com";
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const storage = getStorage(app);
 const sharedRef = doc(db, "couples", "mahmoud-shahd-95c54", "shared", "main");
 const wall = document.getElementById("loginWall");
 const status = document.getElementById("loginStatus");
@@ -118,7 +117,6 @@ const password = document.getElementById("firebasePassword");
 let stopListening = null;
 let writeTimer = null;
 let isApplyingRemote = false;
-let remotePhotos = [];
 
 function localData(){
   const get = key => { try { return JSON.parse(localStorage.getItem(key) || "[]"); } catch { return []; } };
@@ -189,9 +187,49 @@ onAuthStateChanged(auth, async user => {
     const snap = await getDoc(sharedRef);
     if (snap.exists()) applyRemote(snap.data());
     else await setDoc(sharedRef, localData());
+    let firstNotificationSnapshot = true;
+    const deviceKey = "shahd_device_id";
+    let deviceId = localStorage.getItem(deviceKey);
+    if (!deviceId) { deviceId = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()); localStorage.setItem(deviceKey, deviceId); }
+    let lastNotificationId = null;
     stopListening = onSnapshot(sharedRef, snap2 => {
-      if (snap2.exists()) applyRemote(snap2.data());
+      if (snap2.exists()) {
+        const data = snap2.data();
+        applyRemote(data);
+        const notice = data.missYouNotification;
+        if (firstNotificationSnapshot) {
+          lastNotificationId = notice?.id || null;
+          firstNotificationSnapshot = false;
+        } else if (notice?.id && notice.id !== lastNotificationId) {
+          lastNotificationId = notice.id;
+          if (notice.senderDevice !== deviceId) showMissYouNotice(notice.text || "محمود بيقولك: وحشتيني يا شهد ❤️");
+        }
+      }
     }, e => { status.textContent = "مشكلة في المزامنة: " + friendlyError(e); });
+    window.__sendMissYou = async () => {
+      if (!auth.currentUser) { alert("سجّل الدخول الأول."); return; }
+      const id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random());
+      try {
+        await updateDoc(sharedRef, { missYouNotification: { id, senderDevice: deviceId, createdAt: Date.now(), text: "محمود بيقولك: وحشتيني يا شهد ❤️" } });
+      } catch (e) { alert("الإشعار ماوصلش. راجع اتصال الإنترنت وحاول تاني."); }
+    };
+    window.enableLoveNotifications = async () => {
+      if (!("Notification" in window)) { alert("المتصفح ده مش بيدعم إشعارات الجهاز. التنبيه داخل الموقع هيشتغل."); return; }
+      try {
+        const permission = await Notification.requestPermission();
+        alert(permission === "granted" ? "تم تفعيل إشعارات الجهاز ❤️" : "التنبيهات داخل الموقع هتظهر طالما الموقع مفتوح.");
+      } catch { alert("فعّلي الإشعارات من إعدادات المتصفح."); }
+    };
+    function showMissYouNotice(message) {
+      const toast = document.getElementById("loveToast");
+      toast.textContent = "💌 " + message;
+      toast.style.display = "block";
+      if ("Notification" in window && Notification.permission === "granted" && document.visibilityState !== "visible") {
+        try { new Notification("رسالة حب ❤️", { body: message }); } catch {}
+      }
+      clearTimeout(window.__loveToastTimer);
+      window.__loveToastTimer = setTimeout(() => { toast.style.display = "none"; }, 9000);
+    }
   } catch(e) {
     status.textContent = "تعذر فتح مساحة الذكريات: " + friendlyError(e);
   }
