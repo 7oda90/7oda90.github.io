@@ -24,10 +24,18 @@ button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 
 .floating{position:fixed;bottom:-40px;color:#ff8fba;opacity:0;pointer-events:none;animation:floatUp linear forwards;z-index:8}
 @keyframes pulse{50%{transform:scale(1.15)}}@keyframes floatUp{12%{opacity:.75}100%{transform:translateY(-110vh) rotate(25deg);opacity:0}}
 @media(max-width:520px){.form-grid{grid-template-columns:1fr}.slideshow img{height:250px}.card,.panel{border-radius:19px}}
+
+#loginWall{position:fixed;inset:0;z-index:30;background:#100914f5;display:flex;align-items:center;justify-content:center;padding:18px}
+#loginWall[hidden]{display:none}
+.login-card{width:min(440px,100%);padding:25px;border:1px solid #ff9bc455;border-radius:22px;background:#211323;box-shadow:0 20px 70px #000b}
+.login-card h2{color:#ffc1d9;margin:0 0 8px}.login-card p{color:#d6b9ca;font-size:13px;line-height:1.8}
+.login-card input{margin:7px 0}.login-status{min-height:22px;color:#ffc1d9;font-size:12px;margin-top:8px}
+#accountBar{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 15px;color:#e7c5d7;font-size:12px}
 </style>
 </head>
 <body><div class="glow g1"></div><div class="glow g2"></div>
 <main class="wrap">
+<div id="accountBar" hidden><span>متصل بالحساب: <b>m01143636883@gmail.com</b> · المزامنة شغالة ❤️</span><button class="secondary" onclick="window.__shahdLogout && window.__shahdLogout()">تسجيل خروج</button></div>
 <header class="top"><div class="eyebrow">حكايتنا لسه بتتكتب... ❤️</div><h1>محمود <span>&</span> شهد</h1><div class="small">مساحة صغيرة لكل حاجة حلوة بينا</div></header>
 <section class="counter"><div class="counter-title">بقالنا قد إيه من أول يوم؟ ❤️</div><div class="counter-grid"><div class="unit"><span class="num" id="monthsCount">—</span><span class="small">شهر</span></div><div class="unit"><span class="num" id="daysCount">—</span><span class="small">يوم</span></div></div><div class="small" id="totalDays">من يوم 22 يوليو 2026 ❤️</div></section>
 <section class="card"><div class="heart">❤️</div><div class="message" id="letter">
@@ -48,6 +56,16 @@ button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 
 <section class="panel" style="text-align:center"><h2 class="section-title">في حاجة مستخبية ليكي 🔐</h2><p class="section-desc">صفحة صغيرة بكلمة سر بينكم.</p><button class="primary" onclick="openSecret()">افتحي المفاجأة</button></section>
 <div class="footer">اتعملت بحب مخصوص لمحمود وشهد ❤️</div>
 </main>
+<div id="loginWall">
+ <div class="login-card">
+  <div class="heart">❤️</div><h2>دخول مساحة محمود وشهد</h2>
+  <p>سجّل دخولك من أي موبايل بنفس الحساب عشان الذكريات واليوميات والأمنيات تتزامن تلقائيًا بينكم.</p>
+  <label class="small">الإيميل</label><input id="firebaseEmail" type="email" value="m01143636883@gmail.com" readonly>
+  <label class="small">كلمة مرور خاصة بالموقع</label><input id="firebasePassword" type="password" autocomplete="current-password" placeholder="اكتب كلمة المرور">
+  <div class="toolbar"><button class="primary" id="loginBtn">تسجيل الدخول</button><button class="secondary" id="signupBtn">إنشاء الحساب أول مرة</button></div>
+  <div class="login-status" id="loginStatus">لو دي أول مرة، اختار «إنشاء الحساب أول مرة».</div>
+ </div>
+</div>
 <div class="modal" id="secretModal" role="dialog" aria-modal="true"><div class="modal-box"><h2>المكان السري ❤️</h2><div id="secretGate"><p class="small">اكتبي كلمة السر عشان تفتحي الرسالة.</p><input id="secretPass" type="password" placeholder="كلمة السر"><div class="toolbar"><button class="primary" onclick="checkSecret()">افتحي</button><button class="secondary" onclick="closeSecret()">إغلاق</button></div><p class="note" id="secretError"></p></div><div id="secretContent" hidden><p class="message">يا شهد، أتمنى نفضل دايمًا سند لبعض، ونكبر ونحقق أحلامنا واحدة واحدة. وجودك في حكايتي حاجة غالية عندي، ونفسي اللي جاي يكون مليان أيام حلوة لينا. بحبك ❤️</p><button class="secondary" onclick="closeSecret()">اقفلي المفاجأة</button></div></div></div>
 <script>
 const $=id=>document.getElementById(id);
@@ -60,7 +78,7 @@ const photos=Array.from({length:12},(_,i)=>'photos/'+(i+1)+'.jpg');let photoInde
 function loadSlides(){let checked=0;photos.forEach(src=>{const im=new Image();im.onload=()=>{availablePhotos.push(src);availablePhotos.sort((a,b)=>Number(a.match(/(\d+)/)[1])-Number(b.match(/(\d+)/)[1]));renderSlide()};im.onerror=()=>{checked++;if(checked===photos.length&&availablePhotos.length===0)renderSlide()};im.src=src});}
 function renderSlide(){const box=$('slideshow');if(!availablePhotos.length){box.innerHTML='<div class="slide-empty"><strong>صوركم هتظهر هنا ❤️</strong>ارفعوا الصور داخل photos باسم 1.jpg و2.jpg وهكذا</div>';$('slideCount').textContent='0 / 0';return}photoIndex=(photoIndex+availablePhotos.length)%availablePhotos.length;box.innerHTML='';const im=document.createElement('img');im.src=availablePhotos[photoIndex];im.alt='ذكرى جميلة لمحمود وشهد';box.appendChild(im);const cap=document.createElement('div');cap.className='slide-caption';cap.textContent='ذكرى من حكايتنا ❤️';box.appendChild(cap);$('slideCount').textContent=(photoIndex+1)+' / '+availablePhotos.length}
 function changeSlide(n){if(!availablePhotos.length)return;photoIndex=(photoIndex+n+availablePhotos.length)%availablePhotos.length;renderSlide()}loadSlides();setInterval(()=>changeSlide(1),4000);
-const read=(k,fallback=[])=>{try{return JSON.parse(localStorage.getItem(k))||fallback}catch(e){return fallback}},save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const read=(k,fallback=[])=>{try{return JSON.parse(localStorage.getItem(k))||fallback}catch(e){return fallback}},save=(k,v)=>{localStorage.setItem(k,JSON.stringify(v));if(window.__firebaseWrite)window.__firebaseWrite()};
 function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function renderEntries(key,target,kind){const arr=read(key);const el=$(target);if(!arr.length){el.innerHTML='<div class="empty">لسه مفيش إضافات. ابدأوا أول ذكرى ❤️</div>';return}el.innerHTML=arr.slice().reverse().map((x,i)=>'<article class="entry"><h3>'+safe(x.title||x.author||x.text)+'</h3><time>'+safe(x.date||'')+'</time>'+(x.body?'<p>'+safe(x.body)+'</p>':'')+'<div class="toolbar"><button class="secondary" onclick="removeEntry(\''+key+'\','+(arr.length-1-i)+')">حذف</button></div></article>').join('')}
 function removeEntry(key,i){const a=read(key);a.splice(i,1);save(key,a);refreshLists()}
@@ -77,4 +95,109 @@ function openSecret(){$('secretModal').classList.add('show');$('secretPass').val
 function closeSecret(){$('secretModal').classList.remove('show')}
 function checkSecret(){if($('secretPass').value==='shahd2026'){$('secretGate').hidden=true;$('secretContent').hidden=false}else{$('secretError').textContent='كلمة السر مش صحيحة، جربي تاني.'}}
 $('secretPass').addEventListener('keydown',e=>{if(e.key==='Enter')checkSecret()});refreshLists();setInterval(()=>{if(Math.random()>.55)makeHearts()},7000);
-</script></body></html>
+</script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBLN5RfLQTHznQ9d-Bu2kSi1b-xmmChuyw",
+  authDomain: "mahmoud-shahd-95c54.firebaseapp.com",
+  projectId: "mahmoud-shahd-95c54",
+  storageBucket: "mahmoud-shahd-95c54.firebasestorage.app",
+  messagingSenderId: "273796229043",
+  appId: "1:273796229043:web:d1a7b94167ebfb37d78dc6",
+  measurementId: "G-QNYQ3B87GY"
+};
+const allowedEmail = "m01143636883@gmail.com";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const sharedRef = doc(db, "couples", "mahmoud-shahd-95c54", "shared", "main");
+const wall = document.getElementById("loginWall");
+const status = document.getElementById("loginStatus");
+const password = document.getElementById("firebasePassword");
+let stopListening = null;
+let writeTimer = null;
+let isApplyingRemote = false;
+
+function localData(){
+  const get = key => { try { return JSON.parse(localStorage.getItem(key) || "[]"); } catch { return []; } };
+  return { memories:get("shahd_memories"), diary:get("shahd_diary"), wishes:get("shahd_wishes"), updatedAt:Date.now() };
+}
+function applyRemote(data){
+  isApplyingRemote = true;
+  localStorage.setItem("shahd_memories", JSON.stringify(Array.isArray(data.memories)?data.memories:[]));
+  localStorage.setItem("shahd_diary", JSON.stringify(Array.isArray(data.diary)?data.diary:[]));
+  localStorage.setItem("shahd_wishes", JSON.stringify(Array.isArray(data.wishes)?data.wishes:[]));
+  if (typeof refreshLists === "function") refreshLists();
+  isApplyingRemote = false;
+}
+window.__firebaseWrite = () => {
+  if (!auth.currentUser || isApplyingRemote) return;
+  clearTimeout(writeTimer);
+  writeTimer = setTimeout(async () => {
+    try { await setDoc(sharedRef, localData(), { merge:true }); }
+    catch (e) { status.textContent = "تعذر حفظ التعديلات: " + friendlyError(e); }
+  }, 450);
+};
+function friendlyError(e){
+  const code = e?.code || "";
+  if (code.includes("invalid-credential") || code.includes("wrong-password") || code.includes("user-not-found")) return "الإيميل أو كلمة المرور غير صحيحة.";
+  if (code.includes("email-already-in-use")) return "الحساب موجود بالفعل. اختار تسجيل الدخول.";
+  if (code.includes("weak-password")) return "كلمة المرور لازم تكون 6 أحرف على الأقل.";
+  if (code.includes("network")) return "راجع اتصال الإنترنت وحاول تاني.";
+  if (code.includes("permission-denied")) return "قواعد Firestore محتاجة مراجعة. انسخ القواعد الموجودة في تعليمات الإعداد.";
+  return e?.message || "حصل خطأ. حاول مرة تانية.";
+}
+async function enter(mode){
+  const email = allowedEmail;
+  const pass = password.value;
+  if (!pass) { status.textContent = "اكتب كلمة المرور الأول."; return; }
+  document.getElementById("loginBtn").disabled = true;
+  document.getElementById("signupBtn").disabled = true;
+  status.textContent = "جاري الاتصال...";
+  try {
+    if (mode === "signup") await createUserWithEmailAndPassword(auth,email,pass);
+    else await signInWithEmailAndPassword(auth,email,pass);
+  } catch(e) { status.textContent = friendlyError(e); }
+  finally {
+    document.getElementById("loginBtn").disabled = false;
+    document.getElementById("signupBtn").disabled = false;
+  }
+}
+document.getElementById("loginBtn").addEventListener("click",()=>enter("login"));
+document.getElementById("signupBtn").addEventListener("click",()=>enter("signup"));
+password.addEventListener("keydown",e=>{if(e.key==="Enter")enter("login")});
+
+onAuthStateChanged(auth, async user => {
+  if (stopListening) { stopListening(); stopListening = null; }
+  if (!user) {
+    wall.hidden = false;
+    document.getElementById("accountBar").hidden = true;
+    status.textContent = "سجّل الدخول بنفس الحساب من موبايلك أو موبايل شهد.";
+    return;
+  }
+  if (user.email !== allowedEmail) {
+    await signOut(auth);
+    status.textContent = "الحساب ده غير مسموح له بالدخول.";
+    return;
+  }
+  wall.hidden = true;
+  document.getElementById("accountBar").hidden = false;
+  status.textContent = "تم تسجيل الدخول.";
+  try {
+    const snap = await getDoc(sharedRef);
+    if (snap.exists()) applyRemote(snap.data());
+    else await setDoc(sharedRef, localData());
+    stopListening = onSnapshot(sharedRef, snap2 => {
+      if (snap2.exists()) applyRemote(snap2.data());
+    }, e => { status.textContent = "مشكلة في المزامنة: " + friendlyError(e); });
+  } catch(e) {
+    status.textContent = "تعذر فتح مساحة الذكريات: " + friendlyError(e);
+  }
+});
+window.__shahdLogout = async () => { await signOut(auth); };
+</script>
+</body></html>
