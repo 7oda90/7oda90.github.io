@@ -121,6 +121,15 @@ document.getElementById("authMahmoud").addEventListener("click", () => chooseAut
 document.getElementById("authShahd").addEventListener("click", () => chooseAuthRole("shahd"));
 chooseAuthRole(authRole);
 const app = initializeApp(firebaseConfig);
+window.__shahdLogout = async () => {
+  try {
+    await signOut(auth);
+    password.value = "";
+    status.textContent = "تم تسجيل الخروج.";
+  } catch (e) {
+    status.textContent = "تعذر تسجيل الخروج: " + friendlyError(e);
+  }
+};
 const auth = getAuth(app);
 const db = getFirestore(app);
 const sharedRef = doc(db, "couples", "mahmoud-shahd-95c54", "shared", "main");
