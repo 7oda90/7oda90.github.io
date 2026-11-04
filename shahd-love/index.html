@@ -34,7 +34,7 @@ button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 
 </head>
 <body><div class="glow g1"></div><div class="glow g2"></div>
 <main class="wrap">
-<div id="accountBar" hidden><span>متصل بالحساب: <b>m01143636883@gmail.com</b> · المزامنة شغالة ❤️</span><button class="secondary" onclick="window.enableLoveNotifications && window.enableLoveNotifications()">تفعيل إشعارات الجهاز 🔔</button><button class="secondary" onclick="window.__shahdLogout && window.__shahdLogout()">تسجيل خروج</button></div>
+<div id="accountBar" hidden><span>متصل بالحساب: <b>m01143636883@gmail.com</b> · المزامنة شغالة ❤️</span><label class="small">أنا: <select id="loveRole" onchange="window.setLoveRole && window.setLoveRole(this.value)" style="width:auto;padding:5px 9px"><option value="">اختار هويتك</option><option value="mahmoud">محمود</option><option value="shahd">شهد</option></select></label><button class="secondary" onclick="window.enableLoveNotifications && window.enableLoveNotifications()">تفعيل إشعارات الجهاز 🔔</button><button class="secondary" onclick="window.__shahdLogout && window.__shahdLogout()">تسجيل خروج</button></div>
 <header class="top"><div class="eyebrow">حكايتنا لسه بتتكتب... ❤️</div><h1>محمود <span>&</span> شهد</h1><div class="small">مساحة صغيرة لكل حاجة حلوة بينا</div></header>
 <section class="counter"><div class="counter-title">بقالنا قد إيه من أول يوم؟ ❤️</div><div class="counter-grid"><div class="unit"><span class="num" id="monthsCount">—</span><span class="small">شهر</span></div><div class="unit"><span class="num" id="daysCount">—</span><span class="small">يوم</span></div></div><div class="small" id="totalDays">من يوم 22 يوليو 2026 ❤️</div></section>
 <section class="card"><div class="heart">❤️</div><div class="message" id="letter">
@@ -49,7 +49,7 @@ button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 
 
 <section class="panel"><h2 class="section-title">صندوق الذكريات 🗓️</h2><p class="section-desc">سجلوا المواقف الحلوة بالتاريخ عشان تفضل موجودة.</p><div class="form-grid"><input id="memoryDate" type="date" aria-label="تاريخ الذكرى"><input id="memoryTitle" placeholder="عنوان الذكرى"><textarea class="full" id="memoryText" placeholder="احكوا حصل إيه..."></textarea></div><div class="toolbar"><button class="primary" onclick="addMemory()">ضيفي ذكرى ❤️</button></div><div id="memoryList"></div></section>
 <section class="panel"><h2 class="section-title">رسالة ليكي 💌</h2><p class="section-desc">كل مرة تضغطي، هتطلعلك رسالة مختلفة من محمود.</p><div class="quote" id="randomQuote">وجودك في حياتي بيخلّي الأيام العادية أحلى ❤️</div><div class="toolbar"><button class="primary" onclick="newQuote()">اسحبي رسالة تانية</button></div></section>
-<section class="panel"><h2 class="section-title">لما توحشيني 🥺</h2><p class="section-desc">زر صغير يفكرك إن في حد بيفتكرِك.</p><div class="toolbar"><button class="primary" onclick="missYou()">وحشتيني يا شهد ❤️</button></div></section>
+<section class="panel"><h2 class="section-title">لما توحشيني 🥺</h2><p class="section-desc">زر صغير يفكرك إن في حد بيفتكرِك.</p><div class="toolbar"><button class="primary" id="loveButton" onclick="missYou()">وحشتيني ❤️</button></div></section>
 <section class="panel"><h2 class="section-title">مفكرتنا سوا 📖</h2><p class="section-desc">اكتبوا يومياتكم. الحفظ هنا على نفس الجهاز والمتصفح فقط حاليًا.</p><div class="form-grid"><input id="diaryAuthor" placeholder="مين بيكتب؟ محمود / شهد"><textarea class="full" id="diaryText" placeholder="اكتبوا اللي في بالكم..."></textarea></div><div class="toolbar"><button class="primary" onclick="addDiary()">احفظوا اليوم</button><button class="secondary" onclick="exportDiary()">تصدير نسخة احتياطية</button><label class="secondary" style="cursor:pointer;padding:10px 16px;border-radius:999px;font-size:13px">استيراد نسخة<input id="importDiary" type="file" accept="application/json" hidden onchange="importDiaryFile(event)"></label></div><div id="diaryList"></div></section>
 <section class="panel"><h2 class="section-title">أمنيات المستقبل ✨</h2><p class="section-desc">حاجات نفسكم تحققوها مع بعض، وعلموا عليها لما تحصل.</p><div class="form-grid"><input class="full" id="wishText" placeholder="مثلاً: نروح مكان جديد سوا"><input id="wishDate" type="date" aria-label="موعد مستهدف اختياري"></div><div class="toolbar"><button class="primary" onclick="addWish()">ضيفوا أمنية</button></div><div id="wishList"></div></section>
 <section class="panel" style="text-align:center"><h2 class="section-title">في حاجة مستخبية ليكي 🔐</h2><p class="section-desc">صفحة صغيرة بكلمة سر بينكم.</p><button class="primary" onclick="openSecret()">افتحي المفاجأة</button></section>
@@ -83,7 +83,7 @@ function addMemory(){const title=$('memoryTitle').value.trim(),body=$('memoryTex
 function addDiary(){const author=$('diaryAuthor').value.trim(),body=$('diaryText').value.trim();if(!author||!body){alert('اكتب اسم اللي بيكتب واليومية.');return}const a=read('shahd_diary');a.push({author,body,date:new Date().toLocaleString('ar-EG')});save('shahd_diary',a);$('diaryText').value='';refreshLists()}
 function exportDiary(){const data={memories:read('shahd_memories'),diary:read('shahd_diary'),wishes:read('shahd_wishes')};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='mahmoud-shahd-backup.json';a.click();URL.revokeObjectURL(url)}
 function importDiaryFile(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.memories)save('shahd_memories',d.memories);if(d.diary)save('shahd_diary',d.diary);if(d.wishes)save('shahd_wishes',d.wishes);refreshLists();alert('تم استيراد النسخة الاحتياطية.')}catch(err){alert('الملف غير صالح.')}};r.readAsText(file);e.target.value=''}
-const quotes=['وجودك في حياتي بيخلّي الأيام العادية أحلى ❤️','أنا مش محتاج يوم مميز عشان أفرح، كفاية إنك موجودة.','كل مرة بفتكرك فيها بلاقي نفسي ببتسم من غير ما أحس.','نفسي أفضل سبب صغير في ضحكتك.','إنتِ مش مجرد ذكرى حلوة، إنتِ جزء من كل اللي جاي.','ربنا يكتب لنا الخير ويجمعنا دايمًا على خير ❤️'];function newQuote(){let q=quotes[Math.floor(Math.random()*quotes.length)];$('randomQuote').textContent=q}function missYou(){newQuote();$('randomQuote').textContent='وحشتيني يا شهد... محمود بيفتكرِك دلوقتي وبيبعتلك قلب كبير ❤️';makeHearts();if(window.__sendMissYou)window.__sendMissYou()}
+const quotes=['وجودك في حياتي بيخلّي الأيام العادية أحلى ❤️','أنا مش محتاج يوم مميز عشان أفرح، كفاية إنك موجودة.','كل مرة بفتكرك فيها بلاقي نفسي ببتسم من غير ما أحس.','نفسي أفضل سبب صغير في ضحكتك.','إنتِ مش مجرد ذكرى حلوة، إنتِ جزء من كل اللي جاي.','ربنا يكتب لنا الخير ويجمعنا دايمًا على خير ❤️'];function newQuote(){let q=quotes[Math.floor(Math.random()*quotes.length)];$('randomQuote').textContent=q}function missYou(){if(!localStorage.getItem('shahd_love_role')){alert('اختار هويتك الأول: محمود أو شهد، من الشريط اللي فوق.');return}newQuote();$('randomQuote').textContent='وحشتيني... ❤️';makeHearts();if(window.__sendMissYou)window.__sendMissYou()}
 function addWish(){const text=$('wishText').value.trim(),date=$('wishDate').value;if(!text){alert('اكتبوا الأمنية الأول.');return}const a=read('shahd_wishes');a.push({text,date,done:false});save('shahd_wishes',a);$('wishText').value='';renderWishes()}
 function renderWishes(){const a=read('shahd_wishes');$('wishList').innerHTML=a.length?a.map((w,i)=>'<article class="entry"><label style="display:flex;gap:9px;align-items:center"><input type="checkbox" style="width:auto" '+(w.done?'checked':'')+' onchange="toggleWish('+i+',this.checked)"><span style="'+(w.done?'text-decoration:line-through;opacity:.6':'')+'">'+safe(w.text)+'</span></label><time>'+safe(w.date||'من غير موعد محدد')+'</time><div class="toolbar"><button class="secondary" onclick="removeWish('+i+')">حذف</button></div></article>').join(''):'<div class="empty">اكتبوا أول أمنية ليكم ✨</div>'}
 function toggleWish(i,v){const a=read('shahd_wishes');a[i].done=v;save('shahd_wishes',a);renderWishes()}function removeWish(i){const a=read('shahd_wishes');a.splice(i,1);save('shahd_wishes',a);renderWishes()}
@@ -206,13 +206,26 @@ onAuthStateChanged(auth, async user => {
         }
       }
     }, e => { status.textContent = "مشكلة في المزامنة: " + friendlyError(e); });
+    window.setLoveRole = (role) => {
+      if (role !== "mahmoud" && role !== "shahd") return;
+      localStorage.setItem("shahd_love_role", role);
+      const selector = document.getElementById("loveRole");
+      if (selector) selector.value = role;
+      const button = document.getElementById("loveButton");
+      if (button) button.textContent = role === "shahd" ? "وحشتني يا محمود ❤️" : "وحشتيني يا شهد ❤️";
+    };
     window.__sendMissYou = async () => {
       if (!auth.currentUser) { alert("سجّل الدخول الأول."); return; }
+      const role = localStorage.getItem("shahd_love_role");
+      if (!role) { alert("اختار هويتك الأول من الشريط اللي فوق."); return; }
       const id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random());
+      const message = role === "shahd" ? "شهد بتقولك: وحشتني يا محمود ❤️" : "محمود بيقولك: وحشتيني يا شهد ❤️";
       try {
-        await updateDoc(sharedRef, { missYouNotification: { id, senderDevice: deviceId, createdAt: Date.now(), text: "محمود بيقولك: وحشتيني يا شهد ❤️" } });
+        await updateDoc(sharedRef, { missYouNotification: { id, senderDevice: deviceId, senderRole: role, createdAt: Date.now(), text: message } });
       } catch (e) { alert("الإشعار ماوصلش. راجع اتصال الإنترنت وحاول تاني."); }
     };
+    const savedRole = localStorage.getItem("shahd_love_role");
+    if (savedRole) window.setLoveRole(savedRole);
     window.enableLoveNotifications = async () => {
       if (!("Notification" in window)) { alert("المتصفح ده مش بيدعم إشعارات الجهاز. التنبيه داخل الموقع هيشتغل."); return; }
       try {
