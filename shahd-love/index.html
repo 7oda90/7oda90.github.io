@@ -34,7 +34,7 @@ button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 
 </head>
 <body><div class="glow g1"></div><div class="glow g2"></div>
 <main class="wrap">
-<div id="accountBar" hidden><span>متصل بالحساب: <b>m01143636883@gmail.com</b> · المزامنة شغالة ❤️</span><label class="small">أنا: <select id="loveRole" onchange="window.setLoveRole && window.setLoveRole(this.value)" style="width:auto;padding:5px 9px"><option value="">اختار هويتك</option><option value="mahmoud">محمود</option><option value="shahd">شهد</option></select></label><button class="secondary" onclick="window.enableLoveNotifications && window.enableLoveNotifications()">تفعيل إشعارات الجهاز 🔔</button><button class="secondary" onclick="window.__shahdLogout && window.__shahdLogout()">تسجيل خروج</button></div>
+<div id="accountBar" hidden><span>متصل بالحساب: <b>m01143636883@gmail.com</b> · المزامنة شغالة ❤️</span><span>أنا:</span><button class="secondary" id="roleMahmoud" type="button">محمود</button><button class="secondary" id="roleShahd" type="button">شهد</button><b id="identityStatus">اختار هويتك</b><button class="secondary" onclick="window.enableLoveNotifications && window.enableLoveNotifications()">تفعيل إشعارات الجهاز 🔔</button><button class="secondary" onclick="window.__shahdLogout && window.__shahdLogout()">تسجيل خروج</button></div>
 <header class="top"><div class="eyebrow">حكايتنا لسه بتتكتب... ❤️</div><h1>محمود <span>&</span> شهد</h1><div class="small">مساحة صغيرة لكل حاجة حلوة بينا</div></header>
 <section class="counter"><div class="counter-title">بقالنا قد إيه من أول يوم؟ ❤️</div><div class="counter-grid"><div class="unit"><span class="num" id="monthsCount">—</span><span class="small">شهر</span></div><div class="unit"><span class="num" id="daysCount">—</span><span class="small">يوم</span></div></div><div class="small" id="totalDays">من يوم 22 يوليو 2026 ❤️</div></section>
 <section class="card"><div class="heart">❤️</div><div class="message" id="letter">
@@ -209,11 +209,13 @@ onAuthStateChanged(auth, async user => {
     window.setLoveRole = (role) => {
       if (role !== "mahmoud" && role !== "shahd") return;
       localStorage.setItem("shahd_love_role", role);
-      const selector = document.getElementById("loveRole");
-      if (selector) selector.value = role;
       const button = document.getElementById("loveButton");
       if (button) button.textContent = role === "shahd" ? "وحشتني يا محمود ❤️" : "وحشتيني يا شهد ❤️";
+      const label = document.getElementById("identityStatus");
+      if (label) label.textContent = role === "shahd" ? "دخول شهد ❤️" : "دخول محمود ❤️";
     };
+    document.getElementById("roleMahmoud").addEventListener("click", () => window.setLoveRole("mahmoud"));
+    document.getElementById("roleShahd").addEventListener("click", () => window.setLoveRole("shahd"));
     window.__sendMissYou = async () => {
       if (!auth.currentUser) { alert("سجّل الدخول الأول."); return; }
       const role = localStorage.getItem("shahd_love_role");
