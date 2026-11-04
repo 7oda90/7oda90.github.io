@@ -22,6 +22,7 @@
     .message { color:#fff0f6; font-size:clamp(15px,3.4vw,18px); line-height:2.15; }
     .message p { margin:0 0 16px; } .message .opening { color:#fff; font-weight:800; font-size:1.12em; }
     .signature { text-align:center; margin-top:24px; color:#ffb5d1; font-size:20px; font-weight:700; }
+    .music-box { margin:22px auto 0; text-align:center; } .music-note { color:#ffc0d9; font-size:13px; margin-bottom:10px; } .music-btn { color:#351226; background:linear-gradient(120deg,#ffc1d9,#ff78ad); box-shadow:0 8px 25px #ff5d9b33; min-width:190px; } .music-status { display:block; color:#d6b9ca; font-size:11px; margin-top:8px; }
     .actions { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:26px; }
     button { font:600 15px 'Cairo',sans-serif; border:0; border-radius:999px; padding:12px 24px; cursor:pointer; transition:.2s; } button:hover { transform:translateY(-2px); }
     .primary { color:#351226; background:linear-gradient(120deg,#ffc1d9,#ff78ad); box-shadow:0 8px 25px #ff5d9b33; }
@@ -46,11 +47,16 @@
         <p>كل سنة وإنتِ حبيبتي، وضحكتي الحلوة، وأجمل صدفة في حياتي ❤️</p>
       </div>
       <div class="signature">من محمود ❤️</div>
+      <div class="music-box"><div class="music-note">الأغنية اللي اخترتها لينا 🎵</div><button class="music-btn" id="musicToggle" type="button" onclick="toggleMusic()">▶ شغّلي الأغنية ❤️</button><span class="music-status" id="musicStatus">اضغطي لتشغيل الأغنية</span></div>
+      <audio id="bgMusic" src="song.mp3" loop preload="metadata"></audio>
       <div class="actions"><button class="primary" onclick="makeHearts()">دوسي هنا لو ابتسمتي ❤️</button><button class="secondary" onclick="copyMessage()">انسخي الرسالة</button></div>
     </section>
     <div class="hint">كل قلب هنا بيقولك إنك غالية ❤️</div><div class="footer">صُنعت بحب خصيصًا لشهد</div>
   </main>
   <script>
+    const bgMusic=document.getElementById("bgMusic");
+    async function toggleMusic(){ const btn=document.getElementById("musicToggle"); const status=document.getElementById("musicStatus"); if(bgMusic.paused){ try{ await bgMusic.play(); btn.textContent="❚❚ إيقاف الأغنية"; status.textContent="الأغنية شغّالة ❤️"; }catch(e){ status.textContent="ملف song.mp3 لسه مش موجود في مجلد الموقع."; } }else{ bgMusic.pause(); btn.textContent="▶ شغّلي الأغنية ❤️"; status.textContent="الأغنية متوقفة"; } }
+    bgMusic.addEventListener("ended",()=>{document.getElementById("musicToggle").textContent="▶ شغّلي الأغنية ❤️";});
     function makeHearts(){ for(let i=0;i<22;i++){ const h=document.createElement('div'); h.className='floating'; h.textContent=['❤','♡','💗','💕'][Math.floor(Math.random()*4)]; h.style.left=Math.random()*100+'vw'; h.style.fontSize=(16+Math.random()*25)+'px'; h.style.animationDuration=(4+Math.random()*4)+'s'; document.body.appendChild(h); setTimeout(()=>h.remove(),8500); } }
     async function copyMessage(){ const text=document.getElementById('letter').innerText; try { await navigator.clipboard.writeText(text); alert('اتنسخت الرسالة ❤️'); } catch(e) { alert('المتصفح منع النسخ التلقائي. حددي الرسالة وانسخيها.'); } }
     setInterval(()=>{ if(Math.random()>.45) makeHearts(); },6500);
