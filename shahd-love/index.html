@@ -84,7 +84,26 @@ function addMemory(){const title=$('memoryTitle').value.trim(),body=$('memoryTex
 function addDiary(){const author=$('diaryAuthor').value.trim(),body=$('diaryText').value.trim();if(!author||!body){alert('اكتب اسم اللي بيكتب واليومية.');return}const a=read('shahd_diary');a.push({author,body,date:new Date().toLocaleString('ar-EG')});save('shahd_diary',a);$('diaryText').value='';refreshLists()}
 function exportDiary(){const data={memories:read('shahd_memories'),diary:read('shahd_diary'),wishes:read('shahd_wishes')};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='mahmoud-shahd-backup.json';a.click();URL.revokeObjectURL(url)}
 function importDiaryFile(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.memories)save('shahd_memories',d.memories);if(d.diary)save('shahd_diary',d.diary);if(d.wishes)save('shahd_wishes',d.wishes);refreshLists();alert('تم استيراد النسخة الاحتياطية.')}catch(err){alert('الملف غير صالح.')}};r.readAsText(file);e.target.value=''}
-const quotes=['وجودك في حياتي بيخلّي الأيام العادية أحلى ❤️','أنا مش محتاج يوم مميز عشان أفرح، كفاية إنك موجودة.','كل مرة بفتكرك فيها بلاقي نفسي ببتسم من غير ما أحس.','نفسي أفضل سبب صغير في ضحكتك.','إنتِ مش مجرد ذكرى حلوة، إنتِ جزء من كل اللي جاي.','ربنا يكتب لنا الخير ويجمعنا دايمًا على خير ❤️'];function newQuote(){let q=quotes[Math.floor(Math.random()*quotes.length)];$('randomQuote').textContent=q}function missYou(){const role=localStorage.getItem('shahd_love_role');if(!role){alert('اختار هويتك الأول: محمود أو شهد، من الشريط اللي فوق.');return}newQuote();$('randomQuote').textContent=role==='shahd'?'وحشتني... ❤️':'وحشتيني... ❤️';makeHearts();if(window.__sendMissYou)window.__sendMissYou()}
+const quotes=['وجودك في حياتي بيخلّي الأيام العادية أحلى ❤️','أنا مش محتاج يوم مميز عشان أفرح، كفاية إنك موجودة.','كل مرة بفتكرك فيها بلاقي نفسي ببتسم من غير ما أحس.','نفسي أفضل سبب صغير في ضحكتك.','إنتِ مش مجرد ذكرى حلوة، إنتِ جزء من كل اللي جاي.','ربنا يكتب لنا الخير ويجمعنا دايمًا على خير ❤️'];function newQuote(){let q=quotes[Math.floor(Math.random()*quotes.length)];$('randomQuote').textContent=q}function renderLocalLoveLog(){
+  const target=$('loveLog'); if(!target)return;
+  let entries=[]; try{entries=JSON.parse(localStorage.getItem('shahd_local_love_log')||'[]')}catch(e){}
+  if(!entries.length){target.innerHTML='<div class="empty">لسه محدش ضغط على الزر.</div>';return}
+  target.innerHTML=entries.slice().reverse().map(item=>{
+    const ago=Math.max(0,Math.floor((Date.now()-item.createdAt)/1000));
+    const relative=ago<60?'منذ لحظات':ago<3600?'منذ '+Math.floor(ago/60)+' دقيقة':ago<86400?'منذ '+Math.floor(ago/3600)+' ساعة':'منذ '+Math.floor(ago/86400)+' يوم';
+    return '<article class="entry"><b>'+safe(item.senderRole==='shahd'?'شهد':'محمود')+'</b><div>'+safe(item.senderRole==='shahd'?'وحشتني يا محمود ❤️':'وحشتيني يا شهد ❤️')+'</div><time>'+relative+' · '+new Date(item.createdAt).toLocaleString('ar-EG')+'</time></article>';
+  }).join('');
+}
+function missYou(){
+  const role=localStorage.getItem('shahd_love_role');
+  if(!role){alert('اختار هويتك الأول: محمود أو شهد، من الشريط اللي فوق.');return}
+  newQuote();$('randomQuote').textContent=role==='shahd'?'وحشتني... ❤️':'وحشتيني... ❤️';makeHearts();
+  const entry={id:'local-'+Date.now(),senderRole:role,createdAt:Date.now()};
+  let entries=[];try{entries=JSON.parse(localStorage.getItem('shahd_local_love_log')||'[]')}catch(e){}
+  entries.push(entry);localStorage.setItem('shahd_local_love_log',JSON.stringify(entries.slice(-100)));
+  renderLocalLoveLog();
+  if(window.__sendMissYou)window.__sendMissYou();else alert('السجل ظهر على هذا الجهاز، لكن المزامنة لم تكتمل. حدّث الصفحة وحاول تاني.');
+}
 function addWish(){const text=$('wishText').value.trim(),date=$('wishDate').value;if(!text){alert('اكتبوا الأمنية الأول.');return}const a=read('shahd_wishes');a.push({text,date,done:false});save('shahd_wishes',a);$('wishText').value='';renderWishes()}
 function renderWishes(){const a=read('shahd_wishes');$('wishList').innerHTML=a.length?a.map((w,i)=>'<article class="entry"><label style="display:flex;gap:9px;align-items:center"><input type="checkbox" style="width:auto" '+(w.done?'checked':'')+' onchange="toggleWish('+i+',this.checked)"><span style="'+(w.done?'text-decoration:line-through;opacity:.6':'')+'">'+safe(w.text)+'</span></label><time>'+safe(w.date||'من غير موعد محدد')+'</time><div class="toolbar"><button class="secondary" onclick="removeWish('+i+')">حذف</button></div></article>').join(''):'<div class="empty">اكتبوا أول أمنية ليكم ✨</div>'}
 function toggleWish(i,v){const a=read('shahd_wishes');a[i].done=v;save('shahd_wishes',a);renderWishes()}function removeWish(i){const a=read('shahd_wishes');a.splice(i,1);save('shahd_wishes',a);renderWishes()}
@@ -265,7 +284,10 @@ onAuthStateChanged(auth, async user => {
     function renderLoveLog(entries) {
       const target = document.getElementById("loveLog");
       if (!target) return;
-      currentLoveLog = Array.isArray(entries) ? [...entries].sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0)) : [];
+      let localEntries = [];
+      try { localEntries = JSON.parse(localStorage.getItem("shahd_local_love_log") || "[]"); } catch {}
+      const combined = [...(Array.isArray(entries) ? entries : []), ...localEntries];
+      currentLoveLog = combined.filter((item,index,list) => list.findIndex(other => other.id && item.id ? other.id === item.id : other.createdAt === item.createdAt && other.senderRole === item.senderRole) === index).sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
       target.innerHTML = currentLoveLog.length ? currentLoveLog.map(item => {
         const when = item.createdAt ? new Date(item.createdAt).toLocaleString("ar-EG") : "";
         const ago = timeAgo(item.createdAt);
