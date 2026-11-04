@@ -34,7 +34,7 @@ button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 
 </head>
 <body><div class="glow g1"></div><div class="glow g2"></div>
 <main class="wrap">
-<div id="accountBar" hidden><span>متصل بالحساب: <b>m01143636883@gmail.com</b> · المزامنة شغالة ❤️</span><span>أنا:</span><button class="secondary" id="roleMahmoud" type="button">محمود</button><button class="secondary" id="roleShahd" type="button">شهد</button><b id="identityStatus">اختار هويتك</b><button class="secondary" onclick="window.enableLoveNotifications && window.enableLoveNotifications()">تفعيل إشعارات الجهاز 🔔</button><button class="secondary" onclick="window.__shahdLogout && window.__shahdLogout()">تسجيل خروج</button></div>
+<div id="accountBar" hidden><span>متصل بالحساب: <b id="loggedInEmail">—</b> · المزامنة شغالة ❤️</span><span>أنا:</span><button class="secondary" id="roleMahmoud" type="button">محمود</button><button class="secondary" id="roleShahd" type="button">شهد</button><b id="identityStatus">اختار هويتك</b><button class="secondary" onclick="window.enableLoveNotifications && window.enableLoveNotifications()">تفعيل إشعارات الجهاز 🔔</button><button class="secondary" onclick="window.__shahdLogout && window.__shahdLogout()">تسجيل خروج</button></div>
 <header class="top"><div class="eyebrow">حكايتنا لسه بتتكتب... ❤️</div><h1>محمود <span>&</span> شهد</h1><div class="small">مساحة صغيرة لكل حاجة حلوة بينا</div></header>
 <section class="counter"><div class="counter-title">بقالنا قد إيه من أول يوم؟ ❤️</div><div class="counter-grid"><div class="unit"><span class="num" id="monthsCount">—</span><span class="small">شهر</span></div><div class="unit"><span class="num" id="daysCount">—</span><span class="small">يوم</span></div></div><div class="small" id="totalDays">من يوم 22 يوليو 2026 ❤️</div></section>
 <section class="card"><div class="heart">❤️</div><div class="message" id="letter">
@@ -58,9 +58,10 @@ button{font:600 14px Cairo,sans-serif;border:0;border-radius:999px;padding:10px 
 <div id="loginWall">
  <div class="login-card">
   <div class="heart">❤️</div><h2>دخول مساحة محمود وشهد</h2>
-  <p>سجّل دخولك من أي موبايل بنفس الحساب عشان الذكريات واليوميات والأمنيات تتزامن تلقائيًا بينكم.</p>
-  <label class="small">الإيميل</label><input id="firebaseEmail" type="email" value="m01143636883@gmail.com" readonly>
-  <label class="small">كلمة مرور خاصة بالموقع</label><input id="firebasePassword" type="password" autocomplete="current-password" placeholder="اكتب كلمة المرور">
+  <p>اختار هويتك، وكل واحد هيدخل بإيميله وكلمة مروره الخاصة. الذكريات هتفضل مشتركة بينكم.</p>
+  <div class="toolbar"><button class="secondary active" id="authMahmoud" type="button">محمود</button><button class="secondary" id="authShahd" type="button">شهد</button></div>
+  <label class="small">الإيميل</label><input id="firebaseEmail" type="email" value="mahmoud@gmail.com" readonly>
+  <label class="small">كلمة المرور</label><input id="firebasePassword" type="password" autocomplete="current-password" placeholder="اكتب كلمة المرور">
   <div class="toolbar"><button class="primary" id="loginBtn">تسجيل الدخول</button><button class="secondary" id="signupBtn">إنشاء الحساب أول مرة</button></div>
   <div class="login-status" id="loginStatus">لو دي أول مرة، اختار «إنشاء الحساب أول مرة».</div>
  </div>
@@ -106,7 +107,19 @@ const firebaseConfig = {
   appId: "1:273796229043:web:d1a7b94167ebfb37d78dc6",
   measurementId: "G-QNYQ3B87GY"
 };
-const allowedEmail = "m01143636883@gmail.com";
+const allowedEmails = ["mahmoud@gmail.com", "shahd@gmail.com"];
+let authRole = localStorage.getItem("shahd_love_role") === "shahd" ? "shahd" : "mahmoud";
+const emailForRole = role => role === "shahd" ? "shahd@gmail.com" : "mahmoud@gmail.com";
+function chooseAuthRole(role){
+  authRole = role;
+  document.getElementById("firebaseEmail").value = emailForRole(role);
+  document.getElementById("authMahmoud").classList.toggle("active", role === "mahmoud");
+  document.getElementById("authShahd").classList.toggle("active", role === "shahd");
+  localStorage.setItem("shahd_love_role", role);
+}
+document.getElementById("authMahmoud").addEventListener("click", () => chooseAuthRole("mahmoud"));
+document.getElementById("authShahd").addEventListener("click", () => chooseAuthRole("shahd"));
+chooseAuthRole(authRole);
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -148,7 +161,7 @@ function friendlyError(e){
   return e?.message || "حصل خطأ. حاول مرة تانية.";
 }
 async function enter(mode){
-  const email = allowedEmail;
+  const email = emailForRole(authRole);
   const pass = password.value;
   if (!pass) { status.textContent = "اكتب كلمة المرور الأول."; return; }
   document.getElementById("loginBtn").disabled = true;
@@ -172,16 +185,17 @@ onAuthStateChanged(auth, async user => {
   if (!user) {
     wall.hidden = false;
     document.getElementById("accountBar").hidden = true;
-    status.textContent = "سجّل الدخول بنفس الحساب من موبايلك أو موبايل شهد.";
+    status.textContent = "اختار اسمك وسجّل الدخول بإيميلك الخاص.";
     return;
   }
-  if (user.email !== allowedEmail) {
+  if (!allowedEmails.includes((user.email || "").toLowerCase())) {
     await signOut(auth);
     status.textContent = "الحساب ده غير مسموح له بالدخول.";
     return;
   }
   wall.hidden = true;
   document.getElementById("accountBar").hidden = false;
+  document.getElementById("loggedInEmail").textContent = user.email;
   status.textContent = "تم تسجيل الدخول.";
   try {
     const snap = await getDoc(sharedRef);
