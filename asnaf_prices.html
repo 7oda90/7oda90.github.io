@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>جدول الأصناف والأسعار</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:18px;background:#f3f6f8;color:#17212b;font-family:Tahoma,Arial,sans-serif}.wrap{max-width:950px;margin:auto}.panel,.paper{background:#fff;border:1px solid #d8e0e6;border-radius:14px;padding:18px;margin-bottom:16px;box-shadow:0 5px 20px #17212b0c}h1{font-size:23px;margin:0 0 8px}.sub,.note{color:#64748b;font-size:13px}.form{display:grid;grid-template-columns:2fr 1fr 2fr auto;gap:10px;align-items:end}label{display:block;font-size:13px;margin-bottom:6px}input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font:inherit}button{border:0;border-radius:9px;padding:12px 16px;font:inherit;font-weight:bold;cursor:pointer}.add{background:#176b87;color:#fff}.secondary{background:#e8eef2;color:#203040}.danger{background:#fff0f0;color:#b42318;padding:7px 10px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.tablebox{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:500px;margin-top:10px}th,td{border:1px solid #475569;padding:11px;text-align:center}th{background:#dce3e8}td:first-child,th:first-child{text-align:right}.total-label{background:#dce3e8;font-weight:bold}.total-value{font-size:20px;font-weight:bold}.empty{color:#64748b;padding:24px}.print-title{display:none;text-align:center}@media(max-width:680px){.form{grid-template-columns:1fr 1fr}.wide,.form button{grid-column:1/-1}}@media print{body{padding:0;background:#fff}.panel{display:none}.paper{border:0;box-shadow:none}.print-title{display:block}table{min-width:0}.delete-col,.note{display:none}}
+</style></head>
+<body><main class="wrap">
+<section class="panel"><h1>إنشاء جدول أصناف وأسعار</h1><p class="sub">أدخل اسم الصنف والسعر والملاحظات، وسيتم حساب الإجمالي تلقائيًا.</p>
+<div class="form"><div class="wide"><label for="item">الصنف</label><input id="item" placeholder="مثال: كرتونة إيكوروكس"></div>
+<div><label for="price">السعر بالجنيه</label><input id="price" type="number" min="0" step="0.01" placeholder="0.00"></div>
+<div class="wide"><label for="note">ملاحظات (اختياري)</label><input id="note" placeholder="تفاصيل إضافية"></div>
+<button class="add" id="add">+ إضافة الصنف</button></div>
+<div class="actions"><button class="secondary" id="clear">مسح الجدول</button><button class="secondary" id="print">طباعة الجدول</button></div></section>
+<section class="paper"><h2 class="print-title">بيان الأصناف والأسعار</h2><div class="tablebox"><table><thead><tr><th>الصنف</th><th>السعر</th><th>ملاحظات</th><th class="delete-col">حذف</th></tr></thead><tbody id="rows"><tr><td colspan="4" class="empty">لم تتم إضافة أصناف بعد</td></tr></tbody><tfoot><tr><td colspan="2" class="total-label">الإجمالي</td><td colspan="2" class="total-value" id="total">0 ج</td></tr></tfoot></table></div><p class="note">يتم حفظ الجدول تلقائيًا على نفس الجهاز والمتصفح.</p></section></main>
+<script>
+const $=id=>document.getElementById(id);let items=[];try{items=JSON.parse(localStorage.getItem('items-price-table')||'[]')}catch(e){}
+const money=n=>Number(n).toLocaleString('ar-EG',{maximumFractionDigits:2})+' ج';
+function save(){try{localStorage.setItem('items-price-table',JSON.stringify(items))}catch(e){}render()}
+function render(){const body=$('rows');body.innerHTML='';if(!items.length)body.innerHTML='<tr><td colspan="4" class="empty">لم تتم إضافة أصناف بعد</td></tr>';items.forEach((x,i)=>{const tr=document.createElement('tr');[x.name,money(Number(x.price)),x.note||''].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});const td=document.createElement('td');td.className='delete-col';const b=document.createElement('button');b.className='danger';b.textContent='حذف';b.onclick=()=>{items.splice(i,1);save()};td.appendChild(b);tr.appendChild(td);body.appendChild(tr)});$('total').textContent=money(items.reduce((s,x)=>s+Number(x.price||0),0))}
+function add(){const name=$('item').value.trim(),price=$('price').value,note=$('note').value.trim();if(!name){alert('اكتب اسم الصنف أولاً');return}if(price===''||!Number.isFinite(Number(price))||Number(price)<0){alert('اكتب سعرًا صحيحًا');return}items.push({name,price:Number(price),note});save();$('item').value='';$('price').value='';$('note').value='';$('item').focus()}
+$('add').onclick=add;['item','price','note'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')add()}));$('clear').onclick=()=>{if(items.length&&confirm('هل تريد مسح كل الأصناف؟')){items=[];save()}};$('print').onclick=()=>window.print();render();
+</script></body></html>
