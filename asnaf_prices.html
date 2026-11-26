@@ -17,6 +17,53 @@
 
 /* Modern glass UI, dashboard and dark theme */
 :root{--glass:rgba(255,255,255,.76);--glass-border:rgba(255,255,255,.75)}body{background:linear-gradient(120deg,#edf5ff,#f4f7fb,#e9f2ff);background-size:300% 300%;animation:bgShift 22s ease infinite}.card,.stat-card{background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--glass-border);box-shadow:0 8px 30px #173c6010}.dashboard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 16px}.stat-card{border-radius:15px;padding:17px;display:flex;flex-direction:column;gap:8px;animation:cardIn .45s ease both}.stat-card span{font-size:12px;color:var(--muted)}.stat-card strong{font-size:clamp(18px,2.2vw,26px);color:var(--blue)}.stat-card small{font-size:11px;color:var(--muted)}.top-tools{display:flex;justify-content:flex-end;margin:-8px 0 12px}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:9999;background:#17324f;color:#fff;padding:12px 20px;border-radius:14px;box-shadow:0 12px 30px #0002;transition:opacity .25s,transform .25s}.toast.show{opacity:1;transform:translate(-50%,0)}@keyframes bgShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}body.dark{--ink:#e5edf8;--muted:#a5b4c8;--line:#33465e;--bg:#0c1420;--blue2:#172e49;--glass:rgba(21,33,49,.76);--glass-border:rgba(120,155,190,.18);background:linear-gradient(120deg,#0c1420,#111e30,#0b1524);background-size:300% 300%;color:var(--ink)}body.dark .card,body.dark .stat-card{color:var(--ink)}body.dark .tab{background:#1a293c;color:#d8e5f5;border-color:var(--line)}body.dark .field input,body.dark .field textarea,body.dark .list-tools input,body.dark .items-table input{background:#111d2c;color:var(--ink);border-color:var(--line)}body.dark th{background:#1b3048;color:#d9eaff}body.dark td{border-color:var(--line)}body.dark .secondary{background:#203954;color:#d8eaff}body.dark .danger{background:#3a2025;color:#ffb8b0}body.dark .invoice-entry:hover{background:#1a2a3c}body.dark .logo{background:#fff}body.dark .empty{color:var(--muted)}@media(max-width:750px){.dashboard{grid-template-columns:repeat(2,minmax(0,1fr))}.stat-card{padding:13px}.stat-card strong{font-size:20px}}
+
+/* Fawatiry visual refresh: adaptive glass UI + animated ambient background */
+:root{--bg:#edf4fb;--glass:rgba(255,255,255,.76);--glass-border:rgba(94,135,177,.2);--blue:#2478d4;--blue2:rgba(36,120,212,.11);--ink:#172b4d;--muted:#647b96;--line:rgba(110,145,180,.24)}
+body{min-height:100vh;position:relative;isolation:isolate;background:linear-gradient(135deg,#f4f8ff 0%,#e8f1fb 48%,#f8fbff 100%);background-attachment:fixed;overflow-x:hidden}
+body:before,body:after{content:"";position:fixed;z-index:-1;pointer-events:none;border-radius:50%;filter:blur(2px);opacity:.55;will-change:transform}
+body:before{width:52vw;height:52vw;min-width:340px;min-height:340px;top:-18vw;right:-12vw;background:radial-gradient(circle at 35% 35%,rgba(64,160,255,.34),rgba(64,160,255,0) 68%);animation:floatOrbA 19s ease-in-out infinite alternate}
+body:after{width:58vw;height:58vw;min-width:360px;min-height:360px;bottom:-25vw;left:-16vw;background:radial-gradient(circle at 55% 45%,rgba(35,205,180,.23),rgba(35,205,180,0) 70%);animation:floatOrbB 23s ease-in-out infinite alternate}
+@keyframes floatOrbA{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-8vw,9vh,0) scale(1.18)}}
+@keyframes floatOrbB{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(9vw,-8vh,0) scale(1.14)}}
+.app{position:relative;z-index:1;max-width:1180px}
+.top{padding:14px 17px;border:1px solid var(--glass-border);border-radius:20px;background:var(--glass);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 12px 38px rgba(35,75,120,.08)}
+.brand h1{letter-spacing:-.5px;font-size:23px}.brand p{font-size:12px}
+.logo{box-shadow:0 5px 16px rgba(25,90,160,.12)}
+.tabs{gap:7px}.tab,button{border-radius:12px;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+button:hover,.tab:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(30,100,170,.13)}
+button:active,.tab:active{transform:scale(.98)}
+.tab{background:rgba(255,255,255,.7);border-color:var(--glass-border);color:var(--ink)}
+.tab.active,.primary{background:linear-gradient(135deg,#2587e7,#1764b5);box-shadow:0 7px 18px rgba(23,105,170,.2)}
+.secondary{background:var(--blue2);color:var(--blue)}
+.card,.stat-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:19px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 12px 34px rgba(35,75,120,.075);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.card:hover,.stat-card:hover{box-shadow:0 16px 40px rgba(35,75,120,.12);border-color:rgba(60,140,220,.3)}
+.stat-card{padding:18px;min-height:112px}
+.stat-card strong{font-size:clamp(20px,2.4vw,28px)}
+.section-title{font-weight:800;letter-spacing:-.2px}
+.field input,.field textarea,.list-tools input{border-radius:11px;transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field textarea:focus,.list-tools input:focus{box-shadow:0 0 0 4px rgba(36,120,212,.12)}
+.items-wrap{border-radius:13px}
+.items-table th{background:rgba(36,120,212,.1)}
+.items-table td{background:rgba(255,255,255,.22)}
+.invoice-entry{border-radius:12px;padding:14px 10px;transition:background .2s,transform .2s}
+.invoice-entry:hover{background:rgba(36,120,212,.07);transform:translateX(-2px)}
+.top-tools{margin-top:-4px}
+#themeToggle{border:1px solid var(--glass-border);box-shadow:0 5px 18px rgba(30,90,150,.08)}
+body.dark{--glass:rgba(17,31,49,.76);--glass-border:rgba(140,175,215,.16);--ink:#e9f2ff;--muted:#a6bad2;--line:rgba(145,175,210,.2);--blue2:rgba(65,145,225,.17);background:linear-gradient(135deg,#081321 0%,#101f33 52%,#0a1728 100%);background-attachment:fixed;color:var(--ink)}
+body.dark:before{opacity:.5;background:radial-gradient(circle at 35% 35%,rgba(30,125,255,.3),rgba(30,125,255,0) 68%)}
+body.dark:after{opacity:.45;background:radial-gradient(circle at 55% 45%,rgba(0,205,180,.2),rgba(0,205,180,0) 70%)}
+body.dark .card,body.dark .stat-card,body.dark .top{background:var(--glass);border-color:var(--glass-border);color:var(--ink)}
+body.dark .items-table td{background:rgba(8,19,33,.2)}
+body.dark .tab{background:rgba(25,43,65,.8);color:var(--ink);border-color:var(--glass-border)}
+body.dark .tab.active{background:linear-gradient(135deg,#2587e7,#1764b5);color:#fff}
+body.dark .field label{color:#b4c7dd}
+body.dark .items-table th{background:rgba(48,112,175,.25);color:#e4f1ff}
+body.dark .total-line{border-color:var(--line)}
+@media(max-width:750px){body{padding:10px}.top{padding:12px;border-radius:16px}.brand h1{font-size:20px}.tabs{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.tab{padding:10px 7px;font-size:12px}.card,.stat-card{border-radius:15px}.stat-card{min-height:96px}}
+@media(prefers-reduced-motion:reduce){body:before,body:after{animation:none!important}*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+@media print{body:before,body:after{display:none!important}body{background:#fff!important}.app{z-index:auto}.card{backdrop-filter:none!important;background:#fff!important}}
+
 </style></head>
 <body><main class="app">
 <header class="top"><div class="brand"><div class="logo"><img src="https://7oda90.github.io/logo.JPG?v=3" alt="شعار المكتبة الحديثة"></div><div><h1>فواتيري</h1><p>نظام بسيط لإنشاء وإدارة الفواتير</p></div></div><nav class="tabs no-print"><button class="tab active" data-tab="create">إنشاء فاتورة</button><button class="tab" data-tab="saved">الفواتير المحفوظة</button><button class="tab" data-tab="settings">بيانات النشاط</button><button class="tab" data-tab="design">تصميم الفاتورة</button><button class="tab" data-tab="inventory">المخزون</button></nav></header><div class="top-tools no-print"><button id="themeToggle" class="secondary">🌙 الوضع الداكن</button></div><section class="dashboard no-print" id="dashboard"><div class="stat-card"><span>فواتير اليوم</span><strong id="dashCount">0</strong><small>عدد الفواتير</small></div><div class="stat-card"><span>مبيعات اليوم</span><strong id="dashSales">0 ج.م</strong><small>إجمالي المبيعات</small></div><div class="stat-card"><span>المبالغ المحصلة</span><strong id="dashPaid">0 ج.م</strong><small>مدفوع اليوم</small></div><div class="stat-card"><span>المبالغ المتبقية</span><strong id="dashDue">0 ج.م</strong><small>على العملاء</small></div></section><div id="toast" class="toast no-print" role="status"></div>
