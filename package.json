@@ -1,0 +1,39 @@
+{
+  "name": "fawatiry-desktop",
+  "version": "1.0.0",
+  "description": "تطبيق فواتيري لإدارة الفواتير",
+  "main": "electron/main.js",
+  "author": "7ODA90",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.7oda90.fawatiry",
+    "productName": "فواتيري",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "Fawatiry-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "فواتيري"
+    }
+  }
+}
