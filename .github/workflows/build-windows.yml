@@ -1,0 +1,25 @@
+name: Build Fawatiry Windows App
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'package.json'
+      - 'electron/**'
+      - '.github/workflows/build-windows.yml'
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install
+      - run: npm run dist:win
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Fawatiry-Windows-Installer
+          path: dist/*.exe
+          if-no-files-found: error
+          retention-days: 30
