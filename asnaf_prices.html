@@ -107,6 +107,31 @@ body.dark .total-line{border-color:var(--line)}
 .thermal-pdf .total-line.final{background:#000!important;color:#fff!important;padding:2.5mm 2mm!important;font-size:13px!important}
 .thermal-pdf .total-line.final *{color:#fff!important}
 
+
+/* Receipt refinements: larger centered logo, never hide invoice columns on paper */
+@media print{
+ body.thermal-print .invoice-head{padding-top:0!important;margin-top:0!important}
+ body.thermal-print .invoice-print-logo{width:44mm!important;max-width:100%!important;height:29mm!important;max-height:29mm!important;object-fit:contain!important;object-position:center!important;margin:0 auto 1mm!important}
+ body.thermal-print .items-table{width:100%!important;min-width:0!important;table-layout:fixed!important}
+ body.thermal-print .items-table th,body.thermal-print .items-table td{display:table-cell!important;text-align:center!important;vertical-align:middle!important}
+ body.thermal-print .items-table th:first-child,body.thermal-print .items-table td:first-child{text-align:right!important}
+ body.thermal-print .items-table th:nth-child(1),body.thermal-print .items-table td:nth-child(1){width:42%!important}
+ body.thermal-print .items-table th:nth-child(2),body.thermal-print .items-table td:nth-child(2){width:13%!important}
+ body.thermal-print .items-table th:nth-child(3),body.thermal-print .items-table td:nth-child(3){width:20%!important}
+ body.thermal-print .items-table th:nth-child(4),body.thermal-print .items-table td:nth-child(4){width:25%!important}
+ body.thermal-print .items-table td:nth-child(2),body.thermal-print .items-table td:nth-child(3),body.thermal-print .items-table td:nth-child(4){text-align:center!important}
+ body.thermal-print .items-table td:nth-child(2) input,body.thermal-print .items-table td:nth-child(3) input,body.thermal-print .items-table td:nth-child(4){text-align:center!important}
+}
+.thermal-pdf .invoice-print-logo{width:44mm!important;max-width:100%!important;height:29mm!important;max-height:29mm!important;object-fit:contain!important;object-position:center!important}
+.thermal-pdf .items-table{width:100%!important;min-width:0!important;table-layout:fixed!important}
+.thermal-pdf .items-table th,.thermal-pdf .items-table td{display:table-cell!important;text-align:center!important;vertical-align:middle!important}
+.thermal-pdf .items-table th:first-child,.thermal-pdf .items-table td:first-child{text-align:right!important}
+.thermal-pdf .items-table th:nth-child(1),.thermal-pdf .items-table td:nth-child(1){width:42%!important}
+.thermal-pdf .items-table th:nth-child(2),.thermal-pdf .items-table td:nth-child(2){width:13%!important}
+.thermal-pdf .items-table th:nth-child(3),.thermal-pdf .items-table td:nth-child(3){width:20%!important}
+.thermal-pdf .items-table th:nth-child(4),.thermal-pdf .items-table td:nth-child(4){width:25%!important}
+.thermal-pdf .items-table td:nth-child(2),.thermal-pdf .items-table td:nth-child(3),.thermal-pdf .items-table td:nth-child(4){text-align:center!important}
+
 </style></head>
 <body><main class="app">
 <header class="top"><div class="brand"><div class="logo"><img src="https://7oda90.github.io/logo.png?v=1" alt="شعار المكتبة الحديثة"></div><div><h1>فواتيري</h1><p>نظام بسيط لإنشاء وإدارة الفواتير</p></div></div><nav class="tabs no-print"><button class="tab active" data-tab="create">إنشاء فاتورة</button><button class="tab" data-tab="saved">الفواتير المحفوظة</button><button class="tab" data-tab="settings">بيانات النشاط</button><button class="tab" data-tab="design">تصميم الفاتورة</button><button class="tab" data-tab="inventory">المخزون</button></nav></header><div class="top-tools no-print"><button id="themeToggle" class="secondary">🌙 الوضع الداكن</button></div><section class="dashboard no-print" id="dashboard"><div class="stat-card"><span>فواتير اليوم</span><strong id="dashCount">0</strong><small>عدد الفواتير</small></div><div class="stat-card"><span>مبيعات اليوم</span><strong id="dashSales">0 ج.م</strong><small>إجمالي المبيعات</small></div><div class="stat-card"><span>المبالغ المحصلة</span><strong id="dashPaid">0 ج.م</strong><small>مدفوع اليوم</small></div><div class="stat-card"><span>المبالغ المتبقية</span><strong id="dashDue">0 ج.م</strong><small>على العملاء</small></div></section><div id="toast" class="toast no-print" role="status"></div>
