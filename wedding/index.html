@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f2e9">
+<meta name="description" content="دعوة زفاف محمود وشهد — 28 نوفمبر 2027">
+<title>Mahmoud & Shahd | Wedding Invitation</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
+:root{--ivory:#f7f2e9;--paper:#fffdf8;--gold:#b08b50;--gold2:#d7bd8a;--ink:#393126;--muted:#827765}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#fffdf8 0%,#f4eddf 68%,#eee4d3 100%);color:var(--ink);font-family:'Amiri',serif;display:grid;place-items:center;padding:24px;overflow-x:hidden}
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E")}
+.wrap{width:min(100%,540px);position:relative}
+.card{position:relative;background:rgba(255,253,248,.94);padding:clamp(28px,7vw,54px) clamp(22px,7vw,52px);text-align:center;border:1px solid var(--gold2);outline:1px solid rgba(176,139,80,.35);outline-offset:7px;box-shadow:0 24px 80px rgba(79,57,25,.13);overflow:hidden;animation:rise 1s ease both}
+.card:before,.card:after{content:"✦";position:absolute;color:var(--gold2);font-size:23px}
+.card:before{top:15px;right:17px}.card:after{bottom:15px;left:17px}
+.corner{position:absolute;width:70px;height:70px;border-color:var(--gold2);opacity:.8}
+.tl{top:12px;left:12px;border-top:1px solid;border-left:1px solid}.tr{top:12px;right:12px;border-top:1px solid;border-right:1px solid}.bl{bottom:12px;left:12px;border-bottom:1px solid;border-left:1px solid}.br{bottom:12px;right:12px;border-bottom:1px solid;border-right:1px solid}
+.eyebrow{font-family:'Cormorant Garamond',serif;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-size:14px;margin:0 0 18px}
+.ornament{color:var(--gold);font-size:25px;letter-spacing:9px;margin:8px 0 17px}
+h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(44px,11vw,65px);line-height:.98;color:#8f6c39;margin:10px 0 15px;direction:ltr}
+.amp{font-style:italic;color:#c5a46b;font-size:.72em}
+.arabic-title{font-size:23px;margin:0 0 8px;color:#6c5940}
+.intro{font-size:19px;line-height:1.9;color:#746958;margin:12px auto 19px;max-width:360px}
+.rule{width:74px;height:1px;background:var(--gold2);margin:21px auto}
+.date-label{font-size:18px;color:var(--muted);margin-bottom:6px}
+.date{font-family:'Cormorant Garamond',serif;direction:ltr;font-size:29px;letter-spacing:2px;color:#8f6c39}
+.countdown{display:flex;justify-content:center;gap:10px;margin:19px auto 6px;direction:ltr}
+.unit{min-width:62px;padding:9px 7px;border:1px solid #e5d8c0;background:#fbf8f1}
+.unit strong{display:block;font:600 25px 'Cormorant Garamond',serif;color:#8f6c39}
+.unit span{font-size:12px;color:var(--muted)}
+.details{font-size:17px;line-height:1.9;color:#6f6250}
+.details b{color:#8f6c39;font-weight:700}
+.location{margin-top:8px;font-size:15px;color:#a0927c}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:23px}
+button,.map-link{border:1px solid var(--gold);background:transparent;color:#8f6c39;padding:10px 18px;font:17px 'Amiri',serif;text-decoration:none;cursor:pointer;transition:.25s}
+button:hover,.map-link:hover{background:#f4ead7;transform:translateY(-2px)}
+.footer{font:13px 'Cormorant Garamond',serif;letter-spacing:2px;color:#a99470;margin-top:27px;direction:ltr}
+.envelope{position:fixed;inset:0;background:#f4eddf;display:grid;place-items:center;z-index:5;transition:opacity .8s,visibility .8s;padding:24px}
+.envelope.hide{opacity:0;visibility:hidden}
+.open-card{background:#fffdf8;border:1px solid var(--gold2);padding:38px 30px;text-align:center;width:min(100%,390px);box-shadow:0 20px 70px #8a714533}
+.seal{width:76px;height:76px;border-radius:50%;background:linear-gradient(145deg,#c7a66d,#8e6c3d);color:#fff;display:grid;place-items:center;margin:20px auto;font:30px 'Cormorant Garamond',serif;box-shadow:0 5px 16px #8a714555}
+.open-card p{font-size:20px;color:#78674e}
+.open-card button{background:#9d7a48;color:white;padding:10px 30px}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:380px){body{padding:18px}.countdown{gap:6px}.unit{min-width:55px}.unit strong{font-size:22px}.date{font-size:25px}}
+@media print{body{background:white;padding:0}.envelope,.actions,.grain{display:none!important}.card{box-shadow:none;outline:none;animation:none}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="envelope" id="envelope">
+  <div class="open-card">
+    <div class="eyebrow">A SPECIAL INVITATION</div>
+    <div class="seal">M <span style="font-size:18px">&</span> S</div>
+    <p>لدينا مناسبة سعيدة نود أن تشاركونا فرحتها</p>
+    <button id="openBtn">افتح الدعوة</button>
+  </div>
+</div>
+<main class="wrap">
+  <section class="card">
+    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    <p class="eyebrow">THE WEDDING INVITATION</p>
+    <div class="ornament">❧ ✧ ❧</div>
+    <p class="arabic-title">بكل الحب والفرح</p>
+    <h1>Mahmoud <span class="amp">&</span><br>Shahd</h1>
+    <p class="intro">يتشرف العروسان بدعوتكم لمشاركتهما فرحة العمر، وحضور يومٍ يبدأ بحكاية حب جديدة.</p>
+    <div class="rule"></div>
+    <div class="date-label">موعدنا مع أجمل ليلة</div>
+    <div class="date">28 · 11 · 2027</div>
+    <div class="countdown" aria-label="الوقت المتبقي">
+      <div class="unit"><strong id="days">—</strong><span>Days</span></div>
+      <div class="unit"><strong id="hours">—</strong><span>Hours</span></div>
+      <div class="unit"><strong id="minutes">—</strong><span>Minutes</span></div>
+      <div class="unit"><strong id="seconds">—</strong><span>Seconds</span></div>
+    </div>
+    <div class="rule"></div>
+    <div class="details">وجودكم بيننا يزيد فرحتنا<br><b>وبكم تكتمل سعادتنا</b></div>
+    <div class="location">مكان الحفل وتفاصيله سيتم الإعلان عنها قريبًا</div>
+    <div class="actions">
+      <button onclick="window.print()">طباعة الدعوة</button>
+      <button onclick="shareInvite()">مشاركة الدعوة</button>
+    </div>
+    <div class="footer">WITH LOVE · 2027</div>
+  </section>
+</main>
+<script>
+const envelope=document.getElementById('envelope');
+document.getElementById('openBtn').addEventListener('click',()=>envelope.classList.add('hide'));
+const target=new Date('2027-11-28T20:00:00+02:00').getTime();
+function tick(){
+ let diff=Math.max(0,target-Date.now());
+ const vals={days:Math.floor(diff/86400000),hours:Math.floor(diff%86400000/3600000),minutes:Math.floor(diff%3600000/60000),seconds:Math.floor(diff%60000/1000)};
+ Object.entries(vals).forEach(([id,v])=>document.getElementById(id).textContent=String(v).padStart(2,'0'));
+}
+tick();setInterval(tick,1000);
+async function shareInvite(){
+ const data={title:'Mahmoud & Shahd',text:'دعوة زفاف محمود وشهد — 28 نوفمبر 2027',url:location.href};
+ try{if(navigator.share)await navigator.share(data);else if(navigator.clipboard){await navigator.clipboard.writeText(location.href);alert('تم نسخ رابط الدعوة بعد نشر الموقع.');}else alert('انسخ رابط الموقع من شريط العنوان.');}catch(e){}
+}
+</script>
+</body>
+</html>
